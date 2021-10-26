@@ -1,7 +1,7 @@
 # mini-projet1
 Mini Projet 1 BA1 Sidonie & François
 
-==Infos Générales sur l'onglet Projet:==
+**_Infos Générales sur l'onglet Projet:_**
 - Toutes les méthodes à coder d'après les instructions du cours ont été mises dans l'onglet projet
 - Elles sont sous la forme suivante:
 >Partie :one:
@@ -15,4 +15,6 @@ Mini Projet 1 BA1 Sidonie & François
 - Lorsqu'on commence à travailler sur une méthode, la glisser dans la colonne **In Progress**
 - Les cases à cocher permettent de voir où on en est, notamment si il faut encore faire des tests
 - Glisser la methode dans la colonne **Done** une fois qu'elle est bien codée et testée
+
+
 A la fin on pourra ajouter d'autres taches au projet comme des tests plus généraux, etc...
