@@ -3,7 +3,9 @@ public class enCours {
 
 
     public static boolean[] getNeighbours(boolean[][] image, int row, int col) {
+        
         assert (image != null);
+        
         boolean[] returningTab = new boolean[8]; //Le tableau final retourné qui getNeighbours
 
         if (row - 1 >= 0) {                         // Check d'indice Au milieu en haut / tab indice 0
