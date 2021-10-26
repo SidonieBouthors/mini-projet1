@@ -1,5 +1,5 @@
-# mini-projet1
-Mini Projet 1 BA1 Sidonie & François
+# Mini Projet 1
+Mini Projet 1 - BA1 - Sidonie & François
 
 **_Infos Générales sur l'onglet Projet:_**
 - Toutes les méthodes à coder d'après les instructions du cours ont été mises dans l'onglet projet
