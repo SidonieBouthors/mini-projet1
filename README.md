@@ -6,7 +6,7 @@ Infos Générales sur l'onglet Projet:
 - Elles sont sous la forme suivante:
 
 >Partie :one:
->type **nomDeLaMethode** (arguments)
+>- type **nomDeLaMethode** (arguments)
 > 
 >- [ ] coded
 >- [ ] tested
