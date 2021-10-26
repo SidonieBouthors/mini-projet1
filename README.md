@@ -7,7 +7,7 @@ Infos Générales sur l'onglet Projet:
 
 >Partie :one:
 >type **nomDeLaMethode** (arguments)
->
+> 
 >- [ ] coded
 >- [ ] tested
 >- [ ] special cases
