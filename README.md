@@ -12,7 +12,7 @@ Mini Projet 1 - BA1 - Sidonie & François
 >- [ ] special cases
 >
 >**Description:** Ce que doit retourner la méthode
-- Lorsqu'on commence à travailler sur une méthode, la glisser dans la colonne **In Progress** (on peut aussi mettre notre nom @SidonieBouthors comme ça on sait qui travaille dessus)
+- Lorsqu'on commence à travailler sur une méthode, la glisser dans la colonne **In Progress** (on peut aussi mettre notre nom comme ça on sait qui travaille dessus)
 - Les cases à cocher permettent de voir où on en est, notamment si il faut encore faire des tests
 - Glisser la methode dans la colonne **Done** une fois qu'elle est bien codée et testée
 - Normalement les Issues devraient aller dans les tâches du projet automatiquement
