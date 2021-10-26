@@ -1,3 +1,0 @@
-INDEX VERSION 1.131
-file:/D:/BA1/CS-107%20Programmation/eclipse-workspace/git/.metadata/.plugins/org.eclipse.jdt.core/1865797976.index
-meta_index
