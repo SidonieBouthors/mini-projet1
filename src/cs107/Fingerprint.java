@@ -66,20 +66,20 @@ public class Fingerprint {
    * @return An array containing each neighbours' value.
    */
   public static boolean[] getNeighbours(boolean[][] image, int row, int col) {
-	  assert (image != null); // special case that is not expected (the image is supposed to have been checked
-                              // earlier)
-	  boolean[] returningTab = new boolean[8]; //Le tableau final retourné qui getNeighbours
-
-      if (row - 1 >= 0) {                         // Check d'indice Au milieu en haut / tab indice 0
+	  assert (image != null); // special case that is not expected (the image is supposed to have been checked earlier)
+	  
+	  boolean[] returningTab = new boolean[8]; //Le tableau final retourné par getNeighbours
+	  
+      if (row - 1 >= 0) {                         // Check d'indice En haut au milieu / tab indice 0
           returningTab[0] = image[row - 1][col];
       }
-      if (col - 1 >= 0) {                         // Check d'indice Au milieu, a gauche / tab indice 6
+      if (col - 1 >= 0) {                         // Check d'indice Au milieu a gauche / tab indice 6
           returningTab[6] = image[row][col - 1];
       }
       if (col - 1 >= 0 && row - 1 >= 0) {         // Check d'indice En haut a gauche / tab indice 7
           returningTab[7] = image[row - 1][col-1];
       }
-      if (row + 1 <= 99) {                        // Check d'indice Au milieu en bas / tab indice 4
+      if (row + 1 <= 99) {                        // Check d'indice En bas au milieu / tab indice 4
           returningTab[4] = image[row + 1][col];
       }
       if (col + 1 <= 99 && row + 1 <= 99) {       // Check d'indice En bas a droite / tab indice 3
