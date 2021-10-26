@@ -15,6 +15,6 @@ Mini Projet 1 - BA1 - Sidonie & François
 - Lorsqu'on commence à travailler sur une méthode, la glisser dans la colonne **In Progress**
 - Les cases à cocher permettent de voir où on en est, notamment si il faut encore faire des tests
 - Glisser la methode dans la colonne **Done** une fois qu'elle est bien codée et testée
-
+- Normalement les Issues devraient aller dans les tâches du projet automatiquement
 
 A la fin on pourra ajouter d'autres taches au projet comme des tests plus généraux, etc...
