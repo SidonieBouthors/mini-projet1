@@ -148,7 +148,7 @@ public class Fingerprint {
 		  numberTransitions += 1;
 	  }
 	  
-	  //Dealing with all other transition cases
+	  //Dealing with all other transition cases 0-1 --> 6-7
 	  for (int i = 0; i<7; ++i) {
 		  if (neighbours[i]==false && neighbours[i+1]==true) {
 			  numberTransitions+=1;
