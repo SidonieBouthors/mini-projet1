@@ -1,12 +1,6 @@
 public class enCours {
     public static void main(String[] args) {
-        boolean [] tab = new boolean[3];
-        for (int i = 0; i < 3; i++) {
-            if (tab[i] == false) {
-                System.out.println("yes");
-            }
-        }
-
+        
     }
 
 
