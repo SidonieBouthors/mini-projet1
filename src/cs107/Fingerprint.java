@@ -70,7 +70,7 @@ public class Fingerprint {
 	  
 	  boolean[] returningTab = new boolean[8]; //Le tableau final retourné par getNeighbours
 
-      if (col + 1 <= 99 && row + 1 <= 99 && col - 1 >= 0 && row - 1 >= 0) {
+      if (row + 1 < image.length && row - 1 >= 0 && col + 1 < image[row].length && col - 1 >= 0 ) {
           returningTab[0] = image[row - 1][col];
           returningTab[6] = image[row][col - 1];
           returningTab[7] = image[row - 1][col-1];
@@ -81,29 +81,36 @@ public class Fingerprint {
           returningTab[5] = image[row - 1][col-1];
           return returningTab;
       }
-
-      if (row - 1 >= 0) {                         // Check d'indice En haut au milieu / tab indice 0
+      // Check d'indice En haut au milieu / tab indice 0
+      if (row - 1 >= 0) { 
           returningTab[0] = image[row - 1][col];
       }
-      if (col - 1 >= 0) {                         // Check d'indice Au milieu a gauche / tab indice 6
+      // Check d'indice Au milieu a gauche / tab indice 6
+      if (col - 1 >= 0) {                         
           returningTab[6] = image[row][col - 1];
       }
-      if (col - 1 >= 0 && row - 1 >= 0) {         // Check d'indice En haut a gauche / tab indice 7
+      // Check d'indice En haut a gauche / tab indice 7
+      if (col - 1 >= 0 && row - 1 >= 0) {         
           returningTab[7] = image[row - 1][col-1];
       }
-      if (row + 1 <= image.length) {                        // Check d'indice En bas au milieu / tab indice 4
+      // Check d'indice En bas au milieu / tab indice 4
+      if (row + 1 < image.length) {                        
           returningTab[4] = image[row + 1][col];
       }
-      if (col + 1 <= image[0].length && row + 1 <= 99) {       // Check d'indice En bas a droite / tab indice 3
+      // Check d'indice En bas a droite / tab indice 3
+      if (row + 1 < image.length && col + 1 < image[row + 1].length) {       
           returningTab[3] = image[row + 1][col + 1];
       }
-      if (row - 1 >= 0 && col + 1 <= 99) {        // Check d'indice En haut a droite / tab indice 1
+      // Check d'indice En haut a droite / tab indice 1
+      if (row - 1 >= 0 && col + 1 < image[row - 1].length) {        
           returningTab[1] = image[row - 1][col+1];
       }
-      if (col + 1 <= 99) {                        // Check d'indice Au milieu a droite / tab indice 2
+      // Check d'indice Au milieu a droite / tab indice 2
+      if (col + 1 < image[row].length) {                        
           returningTab[2] = image[row][col+1];
       }
-      if (col - 1 >= 0 && row + 1 <= 99) {        // Check d'indice En bas a gauche / tab indice 5
+      // Check d'indice En bas a gauche / tab indice 5
+      if (col - 1 >= 0 && row + 1 < image.length) {        
           returningTab[5] = image[row - 1][col-1];
       }
       return returningTab;
@@ -119,6 +126,8 @@ public class Fingerprint {
    * @return the number of black neighbours.
    */
   public static int blackNeighbours(boolean[] neighbours) {
+	  
+	  assert (neighbours.length == 8);
 	  
 	  int numberBlackNeighbours = 0;
 	  
@@ -213,7 +222,7 @@ public class Fingerprint {
 			  
 			  //Checking for conditions that are common to both steps
 			  if (image[i][j]
-				&& neighbours != noNeighbours
+				&& Arrays.equals(neighbours, noNeighbours)
 				&& 2 <= blackNeighbours && blackNeighbours <= 6
 				&& transitions(neighbours) == 1) {
 				  

@@ -19,7 +19,8 @@ public class Main {
     //---------------------------
 	System.out.println("Uncomment the function calls in Main.main to test your implementation.");
 	System.out.println("The provided tests are not complete. You have to write your own tests.");
-    testGetNeighbours();
+    //testGetNeighbours();
+	testBlackNeighbours();
     //testConnectedPixels1();
     //testConnectedPixels2();
     //testConnectedPixels3();
@@ -92,6 +93,52 @@ public class Main {
       System.out.print("Computed: ");
       printArray(neighbours2);
     }
+    
+    System.out.print("testGetNeighbours 3: ");
+    boolean[][] image3 = {{false, true, false},{false, true, false},{false, true, false}};
+    boolean[] neighbours3 = Fingerprint.getNeighbours(image3, 1, 1);
+    boolean[] expected3 = {true, false, false, false,
+    						true, false, false, false};
+    if (arrayEqual(neighbours3, expected3)) {
+      System.out.println("OK");
+    } else {
+      System.out.println("ERROR");
+      System.out.print("Expected: ");
+      printArray(expected3);
+      System.out.print("Computed: ");
+      printArray(neighbours3);
+    }
+    
+    System.out.print("testGetNeighbours 4: ");
+    boolean[][] image4 = {{true},{true, true, true}};
+    boolean[] neighbours4 = Fingerprint.getNeighbours(image4, 1, 1);
+    boolean[] expected4 = new boolean[8];
+    expected4[6] = true;
+    expected4[7]= true;
+    expected4[2]=true;
+    if (arrayEqual(neighbours4, expected4)) {
+      System.out.println("OK");
+    } else {
+      System.out.println("ERROR");
+      System.out.print("Expected: ");
+      printArray(expected4);
+      System.out.print("Computed: ");
+      printArray(neighbours4);
+    }
+  }
+  
+  public static void testBlackNeighbours() {
+	  System.out.print("test blackNeighbours:");
+	    boolean[] image = {true, true, true, true, true, true, true, true};
+	    int blackNeighbours = Fingerprint.blackNeighbours(image);
+	    int expected=8;
+	    if (blackNeighbours == expected) {
+	      System.out.println("OK");
+	    } else {
+	      System.out.println("ERROR");
+	      System.out.println("Expected: "+expected);
+	      System.out.print("Computed: "+blackNeighbours);
+	    }
   }
 
   /**
