@@ -188,7 +188,7 @@ public class Fingerprint {
 		  }
 	  }
 	  
-	  return true; //if no incompatibilities are found, return true
+	  return true; //if no incompatibilities are found, return true (identical)
   }
 
   /**
@@ -199,8 +199,45 @@ public class Fingerprint {
    * @return A new array containing each pixel's value after the step.
    */
   public static boolean[][] thinningStep(boolean[][] image, int step) {
-	  //TODO implement
-	  return null;
+	  
+	  //Array of pixel with no neighbours (to test with value of getNeighbours)
+	  boolean[] noNeighbours = new boolean[8];
+	  
+	  //double iteration to iterate over every pixel
+	  for (int i = 0; i < image.length; ++i) {
+		  for (int j = 0; j < image[i].length; ++j) {
+			  
+			  //Computing neighbours and amount of black neighbours for the current pixel
+			  boolean[] neighbours = getNeighbours(image, i, j);
+			  int blackNeighbours = blackNeighbours(neighbours);
+			  
+			  //Checking for conditions that are common to both steps
+			  if (image[i][j]
+				&& neighbours != noNeighbours
+				&& 2 <= blackNeighbours && blackNeighbours <= 6
+				&& transitions(neighbours) == 1) {
+				  
+				  //conditions particular to step 0
+				  if (step == 0
+					&& ((!neighbours[2] || !neighbours[4]) 
+						|| (!neighbours[0] && !neighbours[6]))) {
+					  
+					  image[i][j] = false; //removing pixel
+				  }
+				  
+				  //conditions particular to step 1
+				  if (step == 1
+					&& ((!neighbours[0] || !neighbours[6]) 
+						|| (!neighbours[2] && !neighbours[4]))) {
+							
+					  image[i][j] = false; //removing pixel
+				  }  
+			  }	  
+		  }
+	  }
+	  
+	  return image;
+	  
   }
   
   /**
@@ -211,7 +248,17 @@ public class Fingerprint {
    *         applying the thinning algorithm.
    */
   public static boolean[][] thin(boolean[][] image) {
-	  //TODO implement
+	  
+	  //copy1 image
+	  //do while
+	  //copy2 image
+	  //call step on copy2
+	  //check if copy2 is equals to copy1
+	  
+	  //keeping track of two copies, n and n-1?
+	  //exchanging both copies or using one after the other?
+	  
+	  
 	  return null;
   }
 
