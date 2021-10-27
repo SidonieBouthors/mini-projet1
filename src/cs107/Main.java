@@ -20,7 +20,8 @@ public class Main {
 	System.out.println("Uncomment the function calls in Main.main to test your implementation.");
 	System.out.println("The provided tests are not complete. You have to write your own tests.");
     //testGetNeighbours();
-	testBlackNeighbours();
+	//testBlackNeighbours();
+	testTransitions();
     //testConnectedPixels1();
     //testConnectedPixels2();
     //testConnectedPixels3();
@@ -138,6 +139,20 @@ public class Main {
 	      System.out.println("ERROR");
 	      System.out.println("Expected: "+expected);
 	      System.out.print("Computed: "+blackNeighbours);
+	    }
+  }
+  
+  public static void testTransitions() {
+	  System.out.print("test transitions:");
+	    boolean[] image = {false, true, true, false, true, true, true, false};
+	    int transitions = Fingerprint.transitions(image);
+	    int expected=0;
+	    if (transitions == expected) {
+	      System.out.println("OK");
+	    } else {
+	      System.out.println("ERROR");
+	      System.out.println("Expected: "+expected);
+	      System.out.print("Computed: "+ transitions);
 	    }
   }
 

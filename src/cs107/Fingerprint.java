@@ -102,7 +102,7 @@ public class Fingerprint {
           returningTab[3] = image[row + 1][col + 1];
       }
       // Check d'indice En haut a droite / tab indice 1
-      if (row - 1 >= 0 && col + 1 < image[row - 1].length) {        
+      if (row - 1 >= 0 && col + 1 < image[row].length) {        
           returningTab[1] = image[row - 1][col+1];
       }
       // Check d'indice Au milieu a droite / tab indice 2
@@ -149,6 +149,8 @@ public class Fingerprint {
    * @return the number of white to black transitions.
    */
   public static int transitions(boolean[] neighbours) {
+	  
+	  assert (neighbours.length == 8);
 	  
 	  int numberTransitions = 0;
 	  
