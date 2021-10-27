@@ -21,14 +21,14 @@ public class Main {
 	System.out.println("The provided tests are not complete. You have to write your own tests.");
     //testGetNeighbours();
 	//testBlackNeighbours();
-	testTransitions();
+	//testTransitions();
     //testConnectedPixels1();
     //testConnectedPixels2();
     //testConnectedPixels3();
     //testOrientation();
     //testApplyRotation();
     //testApplyTranslation();
-    //testThin();
+    testThin();
     //testWithSkeleton();
     
     //testDrawSkeleton("1_1"); //draw skeleton of fingerprint 1_1.png

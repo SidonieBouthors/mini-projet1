@@ -111,7 +111,7 @@ public class Fingerprint {
       }
       // Check d'indice En bas a gauche / tab indice 5
       if (col - 1 >= 0 && row + 1 < image.length) {        
-          returningTab[5] = image[row - 1][col-1];
+          returningTab[5] = image[row + 1][col-1];
       }
       return returningTab;
   }
@@ -210,11 +210,15 @@ public class Fingerprint {
    * @return A new array containing each pixel's value after the step.
    */
   public static boolean[][] thinningStep(boolean[][] image, int step) {
+	  //image assumed rectangular with at least 1 line
 	  
 	  //Array of pixel with no neighbours (to test with value of getNeighbours)
 	  boolean[] noNeighbours = new boolean[8];
 	  
-	  //double iteration to iterate over every pixel
+	  //New array to store thinned version of image
+	  boolean[][] imageCopy = new boolean[image.length][image[0].length];
+	  
+	  //double iteration to iterate over every pixel of image
 	  for (int i = 0; i < image.length; ++i) {
 		  for (int j = 0; j < image[i].length; ++j) {
 			  
@@ -233,7 +237,7 @@ public class Fingerprint {
 					&& ((!neighbours[2] || !neighbours[4]) 
 						|| (!neighbours[0] && !neighbours[6]))) {
 					  
-					  image[i][j] = false; //removing pixel
+					  imageCopy[i][j] = false; //black pixel not copied over
 				  }
 				  
 				  //conditions particular to step 1
@@ -241,13 +245,16 @@ public class Fingerprint {
 					&& ((!neighbours[0] || !neighbours[6]) 
 						|| (!neighbours[2] && !neighbours[4]))) {
 							
-					  image[i][j] = false; //removing pixel
+					  imageCopy[i][j] = false; //black pixel not copied over
 				  }  
-			  }	  
+			  }
+			  else {
+				  imageCopy[i][j] = image[i][j]; //pixel copied over
+			  }
 		  }
 	  }
 	  
-	  return image;
+	  return imageCopy;
 	  
   }
   
@@ -259,18 +266,21 @@ public class Fingerprint {
    *         applying the thinning algorithm.
    */
   public static boolean[][] thin(boolean[][] image) {
+	  //image is assumed to always be a rectangle and contain at least 1 row
 	  
-	  //copy1 image
-	  //do while
-	  //copy2 image
-	  //call step on copy2
-	  //check if copy2 is equals to copy1
+	  //Copy of image created
+	  boolean[][] imageCopy = new boolean[image.length][image[0].length];
+	  for (int i = 0; i < image.length; ++i) {
+		  for (int j = 0; j < image[0].length; ++j) {
+			  imageCopy[i][j] = image[i][j];
+		  }
+	  }
 	  
-	  //keeping track of two copies, n and n-1?
-	  //exchanging both copies or using one after the other?
+	  while ( !identical(imageCopy, thinningStep(thinningStep(imageCopy, 0),1))) {
+		  imageCopy = thinningStep(thinningStep(imageCopy, 0),1);
+	  }
 	  
-	  
-	  return null;
+	  return imageCopy;
   }
 
   /**
