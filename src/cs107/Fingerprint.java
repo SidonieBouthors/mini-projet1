@@ -69,7 +69,19 @@ public class Fingerprint {
 	  assert (image != null); // special case that is not expected (the image is supposed to have been checked earlier)
 	  
 	  boolean[] returningTab = new boolean[8]; //Le tableau final retourné par getNeighbours
-	  
+
+      if (col + 1 <= 99 && row + 1 <= 99 && col - 1 >= 0 && row - 1 >= 0) {
+          returningTab[0] = image[row - 1][col];
+          returningTab[6] = image[row][col - 1];
+          returningTab[7] = image[row - 1][col-1];
+          returningTab[4] = image[row + 1][col];      //si le coin superieur gauche et le coin inferieur droit sont libres alors tout est libre
+          returningTab[3] = image[row + 1][col + 1];  //donc on run seuleument lui. Ce qui devrait fonctionner dans la plupart des cas.Cela me semble un peu plus opti
+          returningTab[1] = image[row - 1][col+1];
+          returningTab[2] = image[row][col+1];
+          returningTab[5] = image[row - 1][col-1];
+          return returningTab
+      }
+
       if (row - 1 >= 0) {                         // Check d'indice En haut au milieu / tab indice 0
           returningTab[0] = image[row - 1][col];
       }
