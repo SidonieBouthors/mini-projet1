@@ -79,7 +79,7 @@ public class Fingerprint {
           returningTab[1] = image[row - 1][col+1];
           returningTab[2] = image[row][col+1];
           returningTab[5] = image[row - 1][col-1];
-          return returningTab
+          return returningTab;
       }
 
       if (row - 1 >= 0) {                         // Check d'indice En haut au milieu / tab indice 0

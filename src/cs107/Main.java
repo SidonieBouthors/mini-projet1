@@ -83,7 +83,7 @@ public class Main {
     boolean[] neighbours2 = Fingerprint.getNeighbours(image2, 0, 0);
     boolean[] expected2 = {false, false, true,  false,
                            false, false, false, false};
-    if (arrayEqual(neighbours, expected2)) {
+    if (arrayEqual(neighbours2, expected2)) {
       System.out.println("OK");
     } else {
       System.out.println("ERROR");
