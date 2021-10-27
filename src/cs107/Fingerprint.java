@@ -91,10 +91,10 @@ public class Fingerprint {
       if (col - 1 >= 0 && row - 1 >= 0) {         // Check d'indice En haut a gauche / tab indice 7
           returningTab[7] = image[row - 1][col-1];
       }
-      if (row + 1 <= 99) {                        // Check d'indice En bas au milieu / tab indice 4
+      if (row + 1 <= image.length) {                        // Check d'indice En bas au milieu / tab indice 4
           returningTab[4] = image[row + 1][col];
       }
-      if (col + 1 <= 99 && row + 1 <= 99) {       // Check d'indice En bas a droite / tab indice 3
+      if (col + 1 <= image[0].length && row + 1 <= 99) {       // Check d'indice En bas a droite / tab indice 3
           returningTab[3] = image[row + 1][col + 1];
       }
       if (row - 1 >= 0 && col + 1 <= 99) {        // Check d'indice En haut a droite / tab indice 1
