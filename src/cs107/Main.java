@@ -19,7 +19,7 @@ public class Main {
     //---------------------------
 	System.out.println("Uncomment the function calls in Main.main to test your implementation.");
 	System.out.println("The provided tests are not complete. You have to write your own tests.");
-    //testGetNeighbours();
+    testGetNeighbours();
     //testConnectedPixels1();
     //testConnectedPixels2();
     //testConnectedPixels3();

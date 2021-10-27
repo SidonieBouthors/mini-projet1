@@ -140,8 +140,22 @@ public class Fingerprint {
    * @return the number of white to black transitions.
    */
   public static int transitions(boolean[] neighbours) {
-	  //TODO implement
-	  return 0;
+	  
+	  int numberTransitions = 0;
+	  
+	  // Dealing with case of transition 7-0
+	  if (neighbours[7]==false && neighbours[0]==true) {
+		  numberTransitions += 1;
+	  }
+	  
+	  //Dealing with all other transition cases
+	  for (int i = 0; i<7; ++i) {
+		  if (neighbours[i]==false && neighbours[i+1]==true) {
+			  numberTransitions+=1;
+		  }
+	  }
+	  
+	  return numberTransitions;
   }
 
   /**
@@ -153,8 +167,28 @@ public class Fingerprint {
    *         otherwise.
    */
   public static boolean identical(boolean[][] image1, boolean[][] image2) {
-	  //TODO implement
-	  return false;
+	  
+	  //Dealing with images with different amount of rows
+	  if (image1.length != image2.length) {
+		  return false; //different amounts of rows = not identical
+	  }
+	  
+	  for (int i = 0; i < image1.length; ++i) {
+		  
+		  //Dealing with images with different amounts of columns
+		  if (image1[i].length != image2[i].length) {
+			  return false; //different amount of sub-rows (columns) = not identical
+		  }
+		  
+		  //Checking that every element is the same in each image
+		  for (int j = 0; j < image1[i].length; ++j) {
+			  if (image1[i][j] != image2[i][j]) {
+				  return false; //different value at same indices = not identical
+			  }
+		  }
+	  }
+	  
+	  return true; //if no incompatibilities are found, return true
   }
 
   /**
