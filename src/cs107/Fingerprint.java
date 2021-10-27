@@ -119,8 +119,15 @@ public class Fingerprint {
    * @return the number of black neighbours.
    */
   public static int blackNeighbours(boolean[] neighbours) {
-	  //TODO implement
-	  return 0;
+	  
+	  int numberBlackNeighbours = 0;
+	  
+	  for (int i = 0; i<8; ++i) {
+		  if (neighbours[i] == true){
+			  numberBlackNeighbours += 1;
+		  }
+	  }
+	  return numberBlackNeighbours;
   }
   
   /**
