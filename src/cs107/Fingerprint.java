@@ -296,7 +296,28 @@ public class Fingerprint {
    *         <code>(row, col)</code>.
    */
   public static boolean[][] connectedPixels(boolean[][] image, int row, int col, int distance) {
-	  //TODO implement
+
+      // Tableau de fin de meme taille que le tableau initial comme précisé dans l'énoncé
+      boolean[][] returningTab = new boolean[image.length][image[0].length];
+
+      // Coordonnées potentiellement utilisable qui part de [ligne-distance][col-distance] jusqu'a [ligne+distance] [col+distance]
+      int coordonneeXDepart=row-distance, coordonneeXFin=row+distance,coordonneeYDepart=col-distance,coordonneeYFin=col+distance;
+
+      // Si on prend la distance tout autour de image [row] [col], il faut que toute les indices des cases dans ce carré appartiennent au tableau.
+      // Ou si ca depasse les indices du tableau, on réajuste au maximum/minimum du tableau afin de ne  pas avoir index out of bound (on a le droit de le faire car on sait que tout ce qui n'est pas dans l'image est false/blanc).
+
+      if (row - distance < 0) {
+          coordonneeYDepart = 0;
+      } else if (row + distance > image[0].length) {
+          coordonneeYFin = image[0].length;         // Désigne la taille y du tableau mais selon les conditions de la boucle on doit faire -1 ou pas.
+      }
+
+      if (col - distance < 0) {
+          coordonneeXDepart = 0;
+      } else if (col + distance > image.length) {
+          coordonneeXFin = image.length;            // Désigne la taille x du tableau mais selon les conditions de la boucle on doit faire -1 ou pas.
+      }
+
 	  return null;
   }
 
