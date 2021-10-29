@@ -28,7 +28,7 @@ public class Main {
     //testOrientation();
     //testApplyRotation();
     //testApplyTranslation();
-    testThin();
+    //testThin();
     //testWithSkeleton();
     
     //testDrawSkeleton("1_1"); //draw skeleton of fingerprint 1_1.png
