@@ -262,7 +262,7 @@ public class Fingerprint {
 	  boolean[] noNeighbours = new boolean[8];
 	  
 	  //New array to store thinned version of image
-	  //boolean[][] imageCopy = new boolean[image.length][image[0].length];
+	  boolean[][] imageCopy = new boolean[image.length][image[0].length];
 	  
 	  //double iteration to iterate over every pixel of image
 	  for (int i = 0; i < image.length; ++i) {
@@ -283,28 +283,26 @@ public class Fingerprint {
 					&& (!neighbours[0] || !neighbours[2] || !neighbours[4]) 
 					&& (!neighbours[2] || !neighbours[4] || !neighbours[6])) {
 					  
-					  image[i][j] = false; //black pixel not copied over
+					  imageCopy[i][j] = false; //black pixel not copied over
 				  } 
 				  //conditions particular to step 1
 				  else if (step == 1
 					&& (!neighbours[0] || !neighbours[6] || !neighbours[2]) 
 					&& (!neighbours[0] || !neighbours[4] || !neighbours[6])) {
 							
-					  image[i][j] = false; //black pixel not copied over
+					  imageCopy[i][j] = false; //black pixel not copied over
 				  }
-				  /*
 				  else {
 					  imageCopy[i][j] = image[i][j]; //pixel copied over
-				  }*/
+				  }
 			  }
-			  /*
 			  else {
 				  imageCopy[i][j] = image[i][j]; //pixel copied over
-			  }*/
+			  }
 		  }
 	  }
 	  
-	  return image;
+	  return imageCopy;
 	  
   }
   
@@ -324,7 +322,7 @@ public class Fingerprint {
 	  boolean[][] imageCopy1 = new boolean[image.length][image[0].length];
 	  boolean[][] imageCopy2 = new boolean[image.length][image[0].length];
 	  for (int i = 0; i < image.length; ++i) {
-		  for (int j = 0; j < image[0].length; ++j) {
+		  for (int j = 0; j < image[i].length; ++j) {
 			  imageCopy1[i][j] = image[i][j];
 			  imageCopy2[i][j] = image[i][j];
 		  }
@@ -332,25 +330,28 @@ public class Fingerprint {
 	  
 	  //initialize variable used to break loop & keeping track of image to thin
 	  boolean thin = false;
-	  
-	  //iterate while image is not thin
+	  int n =0;
+	  //iterate while image is not thin 
 	  while (!thin) {
 		  
-		  for (int step = 0; step <= 1; ++step){
-			  thinningStep(imageCopy1,step);
-		  }
+		  imageCopy1=thinningStep(imageCopy1,0);
+		  imageCopy1=thinningStep(imageCopy1,1);
+		  
 		  if (identical(imageCopy1, imageCopy2)) {
 			  thin = true;
 		  }
 		  else {
+			  n += 1;
 			  for (int i = 0; i < image.length; ++i) {
-				  for (int j = 0; j < image[0].length; ++j) {
+				  for (int j = 0; j < image[i].length; ++j) {
 					  imageCopy2[i][j] = imageCopy1[i][j];
 				  }
 			  }
 		  }
 		  
+		  
 	  }
+	  System.out.print(n + " ");
 	  return imageCopy2;
   }
 
