@@ -223,6 +223,28 @@ public class Fingerprint {
 	  
 	  return true; //if no incompatibilities are found, return true (identical)
   }
+  
+/**
+ * NEW METHOD to check if two arrays are identical (similar to above method but for boolean[] type arrays)
+ */
+  public static boolean identical(boolean[] array1, boolean[] array2) {
+	  
+	  //null images are not expected
+	  assert(array1!=null & array2!=null);
+	  
+	  //Dealing with images with different amount of elements
+	  if (array1.length != array2.length) {
+		  return false;
+	  }
+	  for (int i = 0; i < array1.length; ++i) {
+		  
+		  //Checking that every element is the same in each image
+		  if (array1[i] != array2[i]) {
+				  return false; //different value at same indices = not identical
+		  }
+	  }
+	  return true; //if no incompatibilities are found, return true (identical)
+  }
 
   /**
    * Internal method used by {@link #thin(boolean[][])}.
@@ -252,7 +274,7 @@ public class Fingerprint {
 			  
 			  //Checking for conditions that are common to both steps
 			  if (image[i][j]
-				&& !Arrays.equals(neighbours, noNeighbours)
+				&& !identical(neighbours, noNeighbours)
 				&& 2 <= blackNeighbours && blackNeighbours <= 6
 				&& transitions(neighbours) == 1) {
 				  
@@ -315,13 +337,18 @@ public class Fingerprint {
 	  //iterate while image is not thin
 	  while (!thin) {
 		  
-		  for (int step = 0; step < 1; ++step){
+		  for (int step = 0; step <= 1; ++step){
 			  thinningStep(imageToThin? imageCopy1 : imageCopy2,step);
 		  }
 		  if (identical(imageCopy1, imageCopy2)) {
 			  thin = true;
 		  }
 		  else {
+			  for (int i = 0; i < image.length; ++i) {
+				  for (int j = 0; j < image[0].length; ++j) {
+					  imageCopy1[i][j] = imageCopy2[i][j];
+				  }
+			  }
 			  imageToThin = !imageToThin;
 		  }
 		  
