@@ -66,53 +66,69 @@ public class Fingerprint {
    * @return An array containing each neighbours' value.
    */
   public static boolean[] getNeighbours(boolean[][] image, int row, int col) {
-	  assert (image != null); // special case that is not expected (the image is supposed to have been checked earlier)
+	  //image is supposed rectangular (all lines are the same length)
 	  
-	  boolean[] returningTab = new boolean[8]; //Le tableau final retourné par getNeighbours
-
+	  // special case that is not expected (the image is supposed to have been checked earlier)
+	  assert (image != null); 
+	  
+	  //If row and col refers to a pixel out of image bounds, return null
+	  if(row >= image.length || col >= image[0].length) {
+		  return null;
+	  }
+	  
+	  //Array returned by getNeighbors
+	  boolean[] returningTab = new boolean[8]; 
+	  
+	  //If the pixels in upper left and lower right corners of the pixel at (row, col) exist (are in bounds),
+	  //then all neighbour pixels exist (as image is a rectangle)
+	  //therefore we only run this piece of code (more efficient as this will be the case for most pixels of the image):
       if (row + 1 < image.length && row - 1 >= 0 && col + 1 < image[row].length && col - 1 >= 0 ) {
           returningTab[0] = image[row - 1][col];
-          returningTab[6] = image[row][col - 1];
-          returningTab[7] = image[row - 1][col-1];
-          returningTab[4] = image[row + 1][col];      //si le coin superieur gauche et le coin inferieur droit sont libres alors tout est libre
-          returningTab[3] = image[row + 1][col + 1];  //donc on run seuleument lui. Ce qui devrait fonctionner dans la plupart des cas.Cela me semble un peu plus opti
           returningTab[1] = image[row - 1][col+1];
           returningTab[2] = image[row][col+1];
+          returningTab[3] = image[row + 1][col + 1];
+          returningTab[4] = image[row + 1][col];
           returningTab[5] = image[row + 1][col-1];
+          returningTab[6] = image[row][col - 1];
+          returningTab[7] = image[row - 1][col-1];
           return returningTab;
       }
-      // Check d'indice En haut au milieu / tab indice 0
+      
+      //Code for pixels in corners/borders that did not satisfy previous condition
+      
+      // Check d'indice Up Middle / tab indice 0
       if (row - 1 >= 0) { 
           returningTab[0] = image[row - 1][col];
       }
-      // Check d'indice Au milieu a gauche / tab indice 6
-      if (col - 1 >= 0) {                         
-          returningTab[6] = image[row][col - 1];
-      }
-      // Check d'indice En haut a gauche / tab indice 7
-      if (col - 1 >= 0 && row - 1 >= 0) {         
-          returningTab[7] = image[row - 1][col-1];
-      }
-      // Check d'indice En bas au milieu / tab indice 4
-      if (row + 1 < image.length) {                        
-          returningTab[4] = image[row + 1][col];
-      }
-      // Check d'indice En bas a droite / tab indice 3
-      if (row + 1 < image.length && col + 1 < image[row + 1].length) {       
-          returningTab[3] = image[row + 1][col + 1];
-      }
-      // Check d'indice En haut a droite / tab indice 1
+      // Check d'indice Up Right / tab indice 1
       if (row - 1 >= 0 && col + 1 < image[row].length) {        
           returningTab[1] = image[row - 1][col+1];
       }
-      // Check d'indice Au milieu a droite / tab indice 2
+      // Check d'indice Center Right / tab indice 2
       if (col + 1 < image[row].length) {                        
           returningTab[2] = image[row][col+1];
       }
-      // Check d'indice En bas a gauche / tab indice 5
+      // Check d'indice Down Right / tab indice 3
+      if (row + 1 < image.length && col + 1 < image[row + 1].length) {       
+          returningTab[3] = image[row + 1][col + 1];
+      }
+      // Check d'indice Down Middle / tab indice 4
+      if (row + 1 < image.length) {                        
+          returningTab[4] = image[row + 1][col];
+      }
+      // Check d'indice Down Left / tab indice 5
       if (col - 1 >= 0 && row + 1 < image.length) {        
           returningTab[5] = image[row + 1][col-1];
       }
+      // Check d'indice Center Left / tab indice 6
+      if (col - 1 >= 0) {                         
+          returningTab[6] = image[row][col - 1];
+      }
+      // Check d'indice Up Left / tab indice 7
+      if (col - 1 >= 0 && row - 1 >= 0) {         
+          returningTab[7] = image[row - 1][col-1];
+      }
+      
       return returningTab;
   }
 

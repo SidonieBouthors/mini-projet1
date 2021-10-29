@@ -19,7 +19,7 @@ public class Main {
     //---------------------------
 	System.out.println("Uncomment the function calls in Main.main to test your implementation.");
 	System.out.println("The provided tests are not complete. You have to write your own tests.");
-    //testGetNeighbours();
+    testGetNeighbours();
 	//testBlackNeighbours();
 	//testTransitions();
     //testConnectedPixels1();
@@ -108,23 +108,6 @@ public class Main {
       printArray(expected3);
       System.out.print("Computed: ");
       printArray(neighbours3);
-    }
-    
-    System.out.print("testGetNeighbours 4: ");
-    boolean[][] image4 = {{true},{true, true, true}};
-    boolean[] neighbours4 = Fingerprint.getNeighbours(image4, 1, 1);
-    boolean[] expected4 = new boolean[8];
-    expected4[6] = true;
-    expected4[7]= true;
-    expected4[2]=true;
-    if (arrayEqual(neighbours4, expected4)) {
-      System.out.println("OK");
-    } else {
-      System.out.println("ERROR");
-      System.out.print("Expected: ");
-      printArray(expected4);
-      System.out.print("Computed: ");
-      printArray(neighbours4);
     }
   }
   
