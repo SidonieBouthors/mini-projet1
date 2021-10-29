@@ -223,29 +223,7 @@ public class Fingerprint {
 	  
 	  return true; //if no incompatibilities are found, return true (identical)
   }
-  
-/**
- * NEW METHOD to check if two arrays are identical (similar to above method but for boolean[] type arrays)
 
-  public static boolean identical(boolean[] array1, boolean[] array2) {
-	  
-	  //null images are not expected
-	  assert(array1!=null & array2!=null);
-	  
-	  //Dealing with images with different amount of elements
-	  if (array1.length != array2.length) {
-		  return false;
-	  }
-	  for (int i = 0; i < array1.length; ++i) {
-		  
-		  //Checking that every element is the same in each image
-		  if (array1[i] != array2[i]) {
-				  return false; //different value at same indices = not identical
-		  }
-	  }
-	  return true; //if no incompatibilities are found, return true (identical)
-  }
- */
   /**
    * Internal method used by {@link #thin(boolean[][])}.
    *
@@ -502,10 +480,55 @@ public class Fingerprint {
    * @return the orientation of the minutia in radians.
    */
   public static double computeAngle(boolean[][] connectedPixels, int row, int col, double slope) {
-	  double angle = Math.atan(slope);
-	  int pixelsOver = 0;
+	  
+
+	  int pixelsAbove = 0;
 	  int pixelsBelow = 0;
-	  return 0;
+
+	  //Particular case of vertical line 
+	  if (slope == Double.POSITIVE_INFINITY) {
+		  //counting pixels above and below minutia
+		  for (int i = 0; i < connectedPixels.length; ++i) {
+			  for ( int j = 0 ; j < connectedPixels[i].length; ++j) {
+				  if (i > row) {
+					  pixelsAbove += 1;
+				  }
+				  else {
+					  pixelsBelow += 1;
+				  }
+			  }
+		  }
+		  //returning pi/2 or -pi/2 depending if the line is upwards or downwards
+		  if (pixelsBelow <= pixelsAbove) {
+			  return Math.PI/2 ;
+		  }
+		  else {
+			  return -Math.PI/2 ;
+		  }
+	  }
+
+	  //initialize angle
+	  double angle = Math.atan(slope);
+
+	  //Counting pixels above and below the perpendicular to the slope (going through the minutia)
+	  for (int i = 0; i < connectedPixels.length; ++i) {
+		  for ( int j = 0 ; j < connectedPixels[i].length; ++j) {
+			  if ((row-i) >= (-1/slope) * (j-col)) {
+				  pixelsAbove += 1;
+			  }
+			  else {
+				  pixelsBelow += 1;
+			  }
+		  }
+	  }
+
+	  //adding pi to angle in the cases where it is necessary
+	  if ((angle >= 0 && pixelsBelow >= pixelsAbove)
+		||(angle < 0 && pixelsBelow < pixelsAbove)) {
+		  angle += Math.PI;
+	  }
+	  //returning angle
+	  return angle;
   }
 
   /**
@@ -520,8 +543,22 @@ public class Fingerprint {
    * @return The orientation in degrees.
    */
   public static int computeOrientation(boolean[][] image, int row, int col, int distance) {
-	  //TODO implement
-	  return 0;
+	  
+	  //Use above methods to get the connected pixels, the slope and the angle
+	  boolean[][] connectedPixels = connectedPixels(image, row, col, distance);
+	  double slope = computeSlope(connectedPixels, distance, distance);
+	  double angle = computeAngle(connectedPixels, distance, distance, slope);
+	  
+	  //converting the angle to degrees and rounding
+	  angle = Math.round(Math.toDegrees(angle));
+	  
+	  //making the angle positive if necessary
+	  if (angle < 0) {
+		  angle += 360;
+	  }
+	  
+	  //returning the angle as an int
+	  return (int) angle;
   }
 
   /**
@@ -534,8 +571,29 @@ public class Fingerprint {
    * @see #thin(boolean[][])
    */
   public static List<int[]> extract(boolean[][] image) {
-	  //TODO implement
-	  return null;
+	  
+	  //initialize List and other variables used in the loop
+	  List<int[]> minutiae = new ArrayList<int[]>();
+	  int transitions;
+	  int orientation;
+	  
+	  //loop over every pixel exept those on the borders
+	  for (int i = 1; i < image.length - 1; ++i) {
+		  for (int j = 1; j < image[i].length - 1; ++j) {
+			  
+			  //find number of transitions
+			  transitions = transitions(getNeighbours(image, i, j));
+			  
+			  //if the pixel is a minutia (1 or 3 transitions), add it's row, col and orientation in the list
+			  if (transitions==1 || transitions==3) {
+				  
+				  orientation = computeOrientation(image, i, j, ORIENTATION_DISTANCE);
+				  minutiae.add(new int[]{i, j, orientation});
+			  }
+		  }
+	  }
+	  //return the list
+	  return minutiae;
   }
 
   /**
