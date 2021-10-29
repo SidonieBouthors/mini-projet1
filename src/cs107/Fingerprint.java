@@ -381,7 +381,7 @@ public class Fingerprint {
 		  x = coordNeighbours.get(j)[0];
 		  y = coordNeighbours.get(j)[1];
 
-		  if (x < Math.min(row + distance, image.length) && y < Math.min(col + distance, image[0].length) && x > Math.max(row - distance, 0) && y > Math.max(col - distance, 0)) {
+		  if (x >= Math.min(row + distance, image.length) && y >= Math.min(col + distance, image[0].length) && x <= Math.max(row - distance, 0) && y <= Math.max(col - distance, 0)) {
 			  return returningTab;
 		  }
 
@@ -396,27 +396,35 @@ public class Fingerprint {
 					  case 0:
 						  coordNeighbours.add(new int[]{x - 1, y});
 						  returningTab[x-1][y]=true;
+						  break;
 					  case 1:
 						  coordNeighbours.add(new int[]{x - 1, y + 1});
 						  returningTab[x-1][y+1]=true;
+						  break;
 					  case 2:
 						  coordNeighbours.add(new int[]{x, y + 1});
 						  returningTab[x][y+1]=true;
+						  break;
 					  case 3:
 						  coordNeighbours.add(new int[]{x + 1, y + 1});
 						  returningTab[x+1][y+1]=true;
+						  break;
 					  case 4:
 						  coordNeighbours.add(new int[]{x + 1, y});
 						  returningTab[x+1][y]=true;
+						  break;
 					  case 5:
 						  coordNeighbours.add(new int[]{x + 1, y - 1});
 						  returningTab[x+1][y-1]=true;
+						  break;
 					  case 6:
 						  coordNeighbours.add(new int[]{x, y - 1});
 						  returningTab[x][y-1]=true;
+						  break;
 					  case 7:
 						  coordNeighbours.add(new int[]{x - 1, y - 1});
 						  returningTab[x-1][y-1]=true;
+						  break;
 				  }
 
 
