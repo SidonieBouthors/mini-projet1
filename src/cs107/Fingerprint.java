@@ -503,10 +503,55 @@ public class Fingerprint {
    * @return the orientation of the minutia in radians.
    */
   public static double computeAngle(boolean[][] connectedPixels, int row, int col, double slope) {
-	  double angle = Math.atan(slope);
-	  int pixelsOver = 0;
+	  
+
+	  int pixelsAbove = 0;
 	  int pixelsBelow = 0;
-	  return 0;
+
+	  //Particular case of vertical line 
+	  if (slope == Double.POSITIVE_INFINITY) {
+		  //counting pixels above and below minutia
+		  for (int i = 0; i < connectedPixels.length; ++i) {
+			  for ( int j = 0 ; j < connectedPixels[i].length; ++j) {
+				  if (i > row) {
+					  pixelsAbove += 1;
+				  }
+				  else {
+					  pixelsBelow += 1;
+				  }
+			  }
+		  }
+		  //returning pi/2 or -pi/2 depending if the line is upwards or downwards
+		  if (pixelsBelow <= pixelsAbove) {
+			  return Math.PI/2 ;
+		  }
+		  else {
+			  return -Math.PI/2 ;
+		  }
+	  }
+
+	  //initialize angle
+	  double angle = Math.atan(slope);
+
+	  //Counting pixels above and below the perpendicular to the slope (going through the minutia)
+	  for (int i = 0; i < connectedPixels.length; ++i) {
+		  for ( int j = 0 ; j < connectedPixels[i].length; ++j) {
+			  if ((row-i) >= (-1/slope) * (j-col)) {
+				  pixelsAbove += 1;
+			  }
+			  else {
+				  pixelsBelow += 1;
+			  }
+		  }
+	  }
+
+	  //adding pi to angle in the cases where it is necessary
+	  if ((angle >= 0 && pixelsBelow >= pixelsAbove)
+		||(angle < 0 && pixelsBelow < pixelsAbove)) {
+		  angle += Math.PI;
+	  }
+	  //returning angle
+	  return angle;
   }
 
   /**
