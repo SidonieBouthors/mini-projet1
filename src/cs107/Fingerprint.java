@@ -376,10 +376,14 @@ public class Fingerprint {
 	  int x = coordNeighbours.get(j)[0];
 	  int y = coordNeighbours.get(j)[1];
 
-	  while (j < coordNeighbours.size() && x < Math.min(row + distance,image.length) && y < Math.min(col + distance,image[0].length) && x > Math.max(row - distance,0) && y > Math.max(col - distance,0)) {
+	  while (j < coordNeighbours.size()) {
 
 		  x = coordNeighbours.get(j)[0];
 		  y = coordNeighbours.get(j)[1];
+
+		  if (x < Math.min(row + distance, image.length) && y < Math.min(col + distance, image[0].length) && x > Math.max(row - distance, 0) && y > Math.max(col - distance, 0)) {
+			  return returningTab;
+		  }
 
 		  boolean[] neighbours = getNeighbours(image, x, y);
 
