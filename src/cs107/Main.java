@@ -21,7 +21,7 @@ public class Main {
 	System.out.println("The provided tests are not complete. You have to write your own tests.");
     //testGetNeighbours();
 	//testBlackNeighbours();
-	testTransitions();
+	//testTransitions();
     //testConnectedPixels1();
     //testConnectedPixels2();
     //testConnectedPixels3();
@@ -291,6 +291,12 @@ public class Main {
 	    boolean[][] image1 = Helper.readBinary("resources/test_inputs/1_1_small.png");
 	    boolean[][] skeleton1 = Fingerprint.thin(image1);
 	    Helper.writeBinary("skeleton_1_1_small.png", skeleton1);
+	    
+	    boolean[][] image2 = Helper.readBinary("resources/fingerprints/1_1.png");
+	    boolean[][] skeleton2_true = Helper.readBinary("resources/test_outputs/skeleton_1_1.png");
+	    boolean[][] skeleton2 = Fingerprint.thin(image2);
+	    System.out.print(arrayEqual(skeleton2, skeleton2_true));
+	    Helper.writeBinary("skeleton_1_1_test.png", skeleton2);
   }
 
   public static void testDrawSkeleton(String name) {
