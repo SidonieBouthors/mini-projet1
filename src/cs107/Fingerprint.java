@@ -410,7 +410,7 @@ public class Fingerprint {
 	  double sumProductXY = 0;
 	  
 	  //iterate over image and calculate the 3 sums
-	  //for each pixel, x = j - col and y = rwo - i
+	  //for each pixel, x = j - col and y = row - i
 	  for (int i = 0; i < connectedPixels.length; ++i) {
 		  for (int j = 0; j < connectedPixels[i].length; ++i) {
 			  if (connectedPixels[i][j]) {
@@ -446,7 +446,9 @@ public class Fingerprint {
    * @return the orientation of the minutia in radians.
    */
   public static double computeAngle(boolean[][] connectedPixels, int row, int col, double slope) {
-	  //TODO implement
+	  double angle = Math.atan(slope);
+	  int pixelsOver = 0;
+	  int pixelsBelow = 0;
 	  return 0;
   }
 
