@@ -21,7 +21,7 @@ public class Main {
 	System.out.println("The provided tests are not complete. You have to write your own tests.");
     //testGetNeighbours();
 	//testBlackNeighbours();
-	//testTransitions();
+	testTransitions();
     //testConnectedPixels1();
     //testConnectedPixels2();
     //testConnectedPixels3();
@@ -127,9 +127,9 @@ public class Main {
   
   public static void testTransitions() {
 	  System.out.print("test transitions:");
-	    boolean[] image = {false, true, true, false, true, true, true, false};
+	    boolean[] image = {true, true, true, false, true, true, false, true};
 	    int transitions = Fingerprint.transitions(image);
-	    int expected=0;
+	    int expected=3;
 	    if (transitions == expected) {
 	      System.out.println("OK");
 	    } else {

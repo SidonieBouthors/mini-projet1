@@ -226,7 +226,7 @@ public class Fingerprint {
   
 /**
  * NEW METHOD to check if two arrays are identical (similar to above method but for boolean[] type arrays)
- */
+
   public static boolean identical(boolean[] array1, boolean[] array2) {
 	  
 	  //null images are not expected
@@ -245,7 +245,7 @@ public class Fingerprint {
 	  }
 	  return true; //if no incompatibilities are found, return true (identical)
   }
-
+ */
   /**
    * Internal method used by {@link #thin(boolean[][])}.
    *
@@ -274,21 +274,21 @@ public class Fingerprint {
 			  
 			  //Checking for conditions that are common to both steps
 			  if (image[i][j]
-				&& !identical(neighbours, noNeighbours)
+				&& !Arrays.equals(neighbours, noNeighbours)
 				&& 2 <= blackNeighbours && blackNeighbours <= 6
 				&& transitions(neighbours) == 1) {
 				  
 				  //conditions particular to step 0
 				  if (step == 0
-					&& ((!neighbours[2] || !neighbours[4]) 
-						|| (!neighbours[0] && !neighbours[6]))) {
+					&& (!neighbours[0] || !neighbours[2] || !neighbours[4]) 
+					&& (!neighbours[2] || !neighbours[4] || !neighbours[6])) {
 					  
 					  image[i][j] = false; //black pixel not copied over
 				  } 
 				  //conditions particular to step 1
 				  else if (step == 1
-					&& ((!neighbours[0] || !neighbours[6]) 
-						|| (!neighbours[2] && !neighbours[4]))) {
+					&& (!neighbours[0] || !neighbours[6] || !neighbours[2]) 
+					&& (!neighbours[0] || !neighbours[4] || !neighbours[6])) {
 							
 					  image[i][j] = false; //black pixel not copied over
 				  }
@@ -332,13 +332,12 @@ public class Fingerprint {
 	  
 	  //initialize variable used to break loop & keeping track of image to thin
 	  boolean thin = false;
-	  boolean imageToThin = false;
 	  
 	  //iterate while image is not thin
 	  while (!thin) {
 		  
 		  for (int step = 0; step <= 1; ++step){
-			  thinningStep(imageToThin? imageCopy1 : imageCopy2,step);
+			  thinningStep(imageCopy1,step);
 		  }
 		  if (identical(imageCopy1, imageCopy2)) {
 			  thin = true;
@@ -346,10 +345,9 @@ public class Fingerprint {
 		  else {
 			  for (int i = 0; i < image.length; ++i) {
 				  for (int j = 0; j < image[0].length; ++j) {
-					  imageCopy1[i][j] = imageCopy2[i][j];
+					  imageCopy2[i][j] = imageCopy1[i][j];
 				  }
 			  }
-			  imageToThin = !imageToThin;
 		  }
 		  
 	  }
