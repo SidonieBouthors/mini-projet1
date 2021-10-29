@@ -371,6 +371,8 @@ public class Fingerprint {
 
       // Tableau de fin de meme taille que le tableau initial comme précisé dans l'énoncé
       boolean[][] returningTab = new boolean[image.length][image[0].length];
+	  ArrayList<int[]> coordNeighbours = new ArrayList<int[]>();
+	  coordNeighbours.add(new int[]{row, col});
 
       // Coordonnées potentiellement utilisable qui part de [ligne-distance][col-distance] jusqu'a [ligne+distance] [col+distance]
       int coordonneeXDepart=row-distance, coordonneeXFin=row+distance,coordonneeYDepart=col-distance,coordonneeYFin=col+distance;
@@ -389,6 +391,61 @@ public class Fingerprint {
       } else if (col + distance > image.length) {
           coordonneeXFin = image.length;            // Désigne la taille x du tableau mais selon les conditions de la boucle on doit faire -1 ou pas.
       }
+
+
+
+	  coordNeighbours.add(new int[]{row, col});
+	  int j =0;
+	  int x = coordNeighbours.get(j)[0];
+	  int y = coordNeighbours.get(j)[1];
+
+	  while (j < coordNeighbours.size() && x < Math.max(row + distance,image.length) && y < Math.max(col + distance,image[0].length) && x > Math.max(row - distance,0) && y > Math.max(col - distance,0)) {
+
+		  x = coordNeighbours.get(j)[0];
+		  y = coordNeighbours.get(j)[1];
+
+		  boolean[] neighbours = getNeighbours(image, x, y);
+
+
+		  for (int i = 0; i < 7; ++i) {
+
+			  if (neighbours[i] == true) {
+
+				  switch (i) {
+					  case 0:
+						  coordNeighbours.add(new int[]{x - 1, y});
+						  returningTab[x-1][y]=true;
+					  case 1:
+						  coordNeighbours.add(new int[]{x - 1, y + 1});
+						  returningTab[x-1][y+1]=true;
+					  case 2:
+						  coordNeighbours.add(new int[]{x, y + 1});
+						  returningTab[x][y+1]=true;
+					  case 3:
+						  coordNeighbours.add(new int[]{x + 1, y + 1});
+						  returningTab[x+1][y+1]=true;
+					  case 4:
+						  coordNeighbours.add(new int[]{x + 1, y});
+						  returningTab[x+1][y]=true;
+					  case 5:
+						  coordNeighbours.add(new int[]{x + 1, y - 1});
+						  returningTab[x+1][y-1]=true;
+					  case 6:
+						  coordNeighbours.add(new int[]{x, y - 1});
+						  returningTab[x][y-1]=true;
+					  case 7:
+						  coordNeighbours.add(new int[]{x - 1, y - 1});
+						  returningTab[x-1][y-1]=true;
+				  }
+
+
+			  }
+
+		  }
+		  j += 1;
+	  }
+
+
 
 	  return null;
   }
@@ -446,54 +503,10 @@ public class Fingerprint {
    * @return the orientation of the minutia in radians.
    */
   public static double computeAngle(boolean[][] connectedPixels, int row, int col, double slope) {
-	  
-	  int pixelsAbove = 0;
-	  int pixelsBelow = 0;
-	  
-	  //Particular case of vertical line 
-	  if (slope == Double.POSITIVE_INFINITY) {
-		  //counting pixels above and below minutia
-		  for (int i = 0; i < connectedPixels.length; ++i) {
-			  for ( int j = 0 ; j < connectedPixels[i].length; ++j) {
-				  if (i > row) {
-					  pixelsAbove += 1;
-				  }
-				  else {
-					  pixelsBelow += 1;
-				  }
-			  }
-		  }
-		  //returning pi/2 or -pi/2 depending if the line is upwards or downwards
-		  if (pixelsBelow <= pixelsAbove) {
-			  return Math.PI/2 ;
-		  }
-		  else {
-			  return -Math.PI/2 ;
-		  }
-	  }
-	  
-	  //initialize angle
 	  double angle = Math.atan(slope);
-	  
-	  //Counting pixels above and below the perpendicular to the slope (going through the minutia)
-	  for (int i = 0; i < connectedPixels.length; ++i) {
-		  for ( int j = 0 ; j < connectedPixels[i].length; ++j) {
-			  if ((row-i) >= (-1/slope) * (j-col)) {
-				  pixelsAbove += 1;
-			  }
-			  else {
-				  pixelsBelow += 1;
-			  }
-		  }
-	  }
-	  
-	  //adding pi to angle in the cases where it is necessary
-	  if ((angle >= 0 && pixelsBelow >= pixelsAbove)
-		||(angle < 0 && pixelsBelow < pixelsAbove)) {
-		  angle += Math.PI;
-	  }
-	  //returning angle
-	  return angle;
+	  int pixelsOver = 0;
+	  int pixelsBelow = 0;
+	  return 0;
   }
 
   /**
