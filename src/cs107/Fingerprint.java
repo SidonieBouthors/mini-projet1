@@ -403,8 +403,35 @@ public class Fingerprint {
    * @return the slope.
    */
   public static double computeSlope(boolean[][] connectedPixels, int row, int col) {
-	  //TODO implement
-	  return 0;
+	  
+	  //initialize all 3 sum variables needed
+	  double sumSquareX = 0;
+	  double sumSquareY = 0;
+	  double sumProductXY = 0;
+	  
+	  //iterate over image and calculate the 3 sums
+	  //for each pixel, x = j - col and y = rwo - i
+	  for (int i = 0; i < connectedPixels.length; ++i) {
+		  for (int j = 0; j < connectedPixels[i].length; ++i) {
+			  if (connectedPixels[i][j]) {
+				  sumSquareX += j - col;
+				  sumSquareY += row - i;
+				  sumProductXY += (j - col) * (row - i);
+			  }
+		  }
+	  }
+	  
+	  //Particular case of vertical line
+	  if (sumSquareX == 0) {
+		  return Double.POSITIVE_INFINITY;
+	  }
+	  //Conditions for the two possible formulas of the slope
+	  else if (sumSquareX >= sumSquareY) {
+		  return (sumProductXY / sumSquareX);
+	  }
+	  else {
+		  return (sumSquareY / sumProductXY);
+	  }
   }
 
   /**
