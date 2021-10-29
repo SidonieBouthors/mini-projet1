@@ -508,8 +508,22 @@ public class Fingerprint {
    * @return The orientation in degrees.
    */
   public static int computeOrientation(boolean[][] image, int row, int col, int distance) {
+	  
+	  //Use above methods to get the connected pixels, the slope and the angle
 	  boolean[][] connectedPixels = connectedPixels(image, row, col, distance);
-	  double slope = computeSlope()
+	  double slope = computeSlope(connectedPixels, distance, distance);
+	  double angle = computeAngle(connectedPixels, distance, distance, slope);
+	  
+	  //converting the angle to degrees and rounding
+	  angle = Math.round(Math.toDegrees(angle));
+	  
+	  //making the angle positive if necessary
+	  if (angle < 0) {
+		  angle += 360;
+	  }
+	  
+	  //returning the angle as an int
+	  return (int) angle;
   }
 
   /**
@@ -522,8 +536,29 @@ public class Fingerprint {
    * @see #thin(boolean[][])
    */
   public static List<int[]> extract(boolean[][] image) {
-	  //TODO implement
-	  return null;
+	  
+	  //initialize List and other variables used in the loop
+	  List<int[]> minutiae = new ArrayList<int[]>();
+	  int transitions;
+	  int orientation;
+	  
+	  //loop over every pixel exept those on the borders
+	  for (int i = 1; i < image.length - 1; ++i) {
+		  for (int j = 1; j < image[i].length - 1; ++j) {
+			  
+			  //find number of transitions
+			  transitions = transitions(getNeighbours(image, i, j));
+			  
+			  //if the pixel is a minutia (1 or 3 transitions), add it's row, col and orientation in the list
+			  if (transitions==1 || transitions==3) {
+				  
+				  orientation = computeOrientation(image, i, j, ORIENTATION_DISTANCE);
+				  minutiae.add(new int[]{i, j, orientation});
+			  }
+		  }
+	  }
+	  //return the list
+	  return minutiae;
   }
 
   /**
