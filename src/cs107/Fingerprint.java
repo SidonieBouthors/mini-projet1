@@ -223,29 +223,7 @@ public class Fingerprint {
 	  
 	  return true; //if no incompatibilities are found, return true (identical)
   }
-  
-/**
- * NEW METHOD to check if two arrays are identical (similar to above method but for boolean[] type arrays)
 
-  public static boolean identical(boolean[] array1, boolean[] array2) {
-	  
-	  //null images are not expected
-	  assert(array1!=null & array2!=null);
-	  
-	  //Dealing with images with different amount of elements
-	  if (array1.length != array2.length) {
-		  return false;
-	  }
-	  for (int i = 0; i < array1.length; ++i) {
-		  
-		  //Checking that every element is the same in each image
-		  if (array1[i] != array2[i]) {
-				  return false; //different value at same indices = not identical
-		  }
-	  }
-	  return true; //if no incompatibilities are found, return true (identical)
-  }
- */
   /**
    * Internal method used by {@link #thin(boolean[][])}.
    *
