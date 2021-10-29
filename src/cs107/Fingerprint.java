@@ -252,7 +252,7 @@ public class Fingerprint {
 			  
 			  //Checking for conditions that are common to both steps
 			  if (image[i][j]
-				&& Arrays.equals(neighbours, noNeighbours)
+				&& !Arrays.equals(neighbours, noNeighbours)
 				&& 2 <= blackNeighbours && blackNeighbours <= 6
 				&& transitions(neighbours) == 1) {
 				  
@@ -298,7 +298,7 @@ public class Fingerprint {
 	  //image is assumed not null
 	  assert(image!=null);
 	  
-	  //Copy of image created (by iteration)
+	  //2 Copies of image created (by iteration)
 	  boolean[][] imageCopy1 = new boolean[image.length][image[0].length];
 	  boolean[][] imageCopy2 = new boolean[image.length][image[0].length];
 	  for (int i = 0; i < image.length; ++i) {
@@ -308,19 +308,23 @@ public class Fingerprint {
 		  }
 	  }
 	  
-	  //initialize variable used to break loop & step counter
+	  //initialize variable used to break loop & keeping track of image to thin
 	  boolean thin = false;
+	  boolean imageToThin = false;
 	  
 	  //iterate while image is not thin
 	  while (!thin) {
 		  
 		  for (int step = 0; step < 1; ++step){
-			  imageCopy1=thinningStep(imageCopy1,step);
+			  thinningStep(imageToThin? imageCopy1 : imageCopy2,step);
 		  }
 		  if (identical(imageCopy1, imageCopy2)) {
 			  thin = true;
-			  System.out.print("thin");
 		  }
+		  else {
+			  imageToThin = !imageToThin;
+		  }
+		  
 	  }
 	  return imageCopy2;
   }
