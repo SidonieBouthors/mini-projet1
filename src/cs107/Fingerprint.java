@@ -381,9 +381,9 @@ public class Fingerprint {
 		  x = coordNeighbours.get(j)[0];
 		  y = coordNeighbours.get(j)[1];
 
-		  if (x < Math.min(row + distance, image.length) && y < Math.min(col + distance, image[0].length) && x > Math.max(row - distance, 0) && y > Math.max(col - distance, 0)) {
+		  /*if (x < Math.min(row + distance, image.length) && y < Math.min(col + distance, image[0].length) && x > Math.max(row - distance, 0) && y > Math.max(col - distance, 0)) {
 			  return returningTab;
-		  }
+		  }*/
 
 		  boolean[] neighbours = getNeighbours(image, x, y);
 
@@ -428,7 +428,7 @@ public class Fingerprint {
 
 
 
-	  return null;
+	  return returningTab;
   }
 
   /**
