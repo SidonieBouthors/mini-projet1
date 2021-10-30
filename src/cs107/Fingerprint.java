@@ -236,9 +236,6 @@ public class Fingerprint {
 	  //image assumed not null
 	  assert (image!=null);
 	  
-	  //Array of pixel with no neighbours (to test with value of getNeighbours)
-	  boolean[] noNeighbours = new boolean[8];
-	  
 	  //New array to store thinned version of image
 	  boolean[][] imageCopy = new boolean[image.length][image[0].length];
 	  
@@ -252,7 +249,7 @@ public class Fingerprint {
 			  
 			  //Checking for conditions that are common to both steps
 			  if (image[i][j]
-				&& !Arrays.equals(neighbours, noNeighbours)
+				&& neighbours!=null
 				&& 2 <= blackNeighbours && blackNeighbours <= 6
 				&& transitions(neighbours) == 1) {
 				  
@@ -319,7 +316,6 @@ public class Fingerprint {
 			  thin = true;
 		  }
 		  else {
-			  n += 1;
 			  for (int i = 0; i < image.length; ++i) {
 				  for (int j = 0; j < image[i].length; ++j) {
 					  imageCopy2[i][j] = imageCopy1[i][j];
@@ -329,7 +325,6 @@ public class Fingerprint {
 		  
 		  
 	  }
-	  System.out.print(n + " ");
 	  return imageCopy2;
   }
 
