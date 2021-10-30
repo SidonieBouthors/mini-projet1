@@ -325,7 +325,7 @@ public class Fingerprint {
 		  
 		  
 	  }
-	  return imageCopy2;
+	  return imageCopy1;
   }
 
 	/**
@@ -559,8 +559,8 @@ public class Fingerprint {
 	  
 	  //Use above methods to get the connected pixels, the slope and the angle
 	  boolean[][] connectedPixels = connectedPixels(image, row, col, distance);
-	  double slope = computeSlope(connectedPixels, distance, distance);
-	  double angle = computeAngle(connectedPixels, distance, distance, slope);
+	  double slope = computeSlope(connectedPixels, row, col);
+	  double angle = computeAngle(connectedPixels, row, col, slope);
 	  
 	  //converting the angle to degrees and rounding
 	  angle = Math.round(Math.toDegrees(angle));
