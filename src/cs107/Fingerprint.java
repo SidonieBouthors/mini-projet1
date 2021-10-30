@@ -376,14 +376,13 @@ public class Fingerprint {
 		  boolean[] neighbours = getNeighbours(image, x, y);
 
 
-		  for (int i = 0; i < 7; ++i) {
+		  for (int i = 0; i <= 7; ++i) {
 
 			  if (neighbours[i] == true) {
 
-
-
-						  //Si une des coordonnees a deja été enregistrée avant alors on n'ajoute pas ces nouvelles coordonnees
-						  // Les erreurs d'indices sont pris en compte sur le premier terme
+				  //Si une des coordonnees a deja été enregistrée avant alors on n'ajoute pas ses nouvelles coordonnees
+				  // Les erreurs d'indices sont pris en compte sur le premier terme
+				  
 				  if ((i == 0) && ((j - 1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x - 1, y})))) {
 
 					  coordNeighbours.add(new int[]{x - 1, y});
@@ -398,16 +397,16 @@ public class Fingerprint {
 
 					  coordNeighbours.add(new int[]{x, y + 1});
 					  returningTab[x][y + 1] = true;
-				  }else if ((i==3) && ((j-1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours,new int[]{x + 1, y + 1})))) {
+				  } else if ((i==3) && ((j-1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours,new int[]{x + 1, y + 1})))) {
 							  coordNeighbours.add(new int[]{x + 1, y + 1});
 							  returningTab[x + 1][y + 1] = true;
-				  }else if ((i==4) && ((j-1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x + 1, y})))) {
+				  } else if ((i==4) && ((j-1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x + 1, y})))) {
 							  coordNeighbours.add(new int[]{x + 1, y});
 							  returningTab[x + 1][y] = true;
-				  }else if ((i==5) && ((j-1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x + 1, y - 1})))) {
+				  } else if ((i==5) && ((j-1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x + 1, y - 1})))) {
 							  coordNeighbours.add(new int[]{x + 1, y - 1});
 							  returningTab[x + 1][y - 1] = true;
-				  }else if ((i==6) && ((j-1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x, y - 1})))) {
+				  } else if ((i==6) && ((j-1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x, y - 1})))) {
 							  coordNeighbours.add(new int[]{x, y - 1});
 							  returningTab[x][y - 1] = true;
 				  } else if ((i == 7) && ((j - 1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x - 1, y - 1})))) {
@@ -433,12 +432,6 @@ public class Fingerprint {
 	  }
 	  return false;
   }
-
-
-
-
-
-
 
   /**
    * Computes the slope of a minutia using linear regression.
