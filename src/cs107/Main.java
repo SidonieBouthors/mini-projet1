@@ -23,9 +23,9 @@ public class Main {
     //testGetNeighbours();
 	//testBlackNeighbours();
 	//testTransitions();
-    testConnectedPixels1();
-    testConnectedPixels2();
-    testConnectedPixels3();
+    //testConnectedPixels1();
+    //testConnectedPixels2();
+    //testConnectedPixels3();
     //testOrientation();
     //testApplyRotation();
     //testApplyTranslation();
