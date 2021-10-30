@@ -459,10 +459,10 @@ public class Fingerprint {
 	  //iterate over image and calculate the 3 sums
 	  //for each pixel, x = j - col and y = row - i
 	  for (int i = 0; i < connectedPixels.length; ++i) {
-		  for (int j = 0; j < connectedPixels[i].length; ++i) {
+		  for (int j = 0; j < connectedPixels[i].length; ++j) {
 			  if (connectedPixels[i][j]) {
-				  sumSquareX += j - col;
-				  sumSquareY += row - i;
+				  sumSquareX += Math.pow(j - col, 2);
+				  sumSquareY += Math.pow(row - i, 2);
 				  sumProductXY += (j - col) * (row - i);
 			  }
 		  }

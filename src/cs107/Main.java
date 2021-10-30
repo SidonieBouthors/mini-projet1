@@ -23,10 +23,10 @@ public class Main {
     //testGetNeighbours();
 	//testBlackNeighbours();
 	//testTransitions();
-    //testConnectedPixels1();
-    //testConnectedPixels2();
-    //testConnectedPixels3();
-    //testOrientation();
+    testConnectedPixels1();
+    testConnectedPixels2();
+    testConnectedPixels3();
+    testOrientation();
     //testApplyRotation();
     //testApplyTranslation();
     //testThin();
