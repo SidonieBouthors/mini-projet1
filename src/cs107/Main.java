@@ -1,6 +1,7 @@
 package cs107;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -22,7 +23,7 @@ public class Main {
     //testGetNeighbours();
 	//testBlackNeighbours();
 	//testTransitions();
-    testConnectedPixels1();
+    //testConnectedPixels1();
     //testConnectedPixels2();
     //testConnectedPixels3();
     //testOrientation();
@@ -171,7 +172,7 @@ public class Main {
    */
   public static void testConnectedPixels2() {
     System.out.print("testConnectedPixels2: ");
-    boolean[][] image = {{true, false, false, true},
+    boolean[][] image = {{true, false, true, true},
                          {false, false, true, true},
                          {false, true, true, false},
                          {false, false, false, false}};

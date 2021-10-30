@@ -328,57 +328,50 @@ public class Fingerprint {
 	  return imageCopy2;
   }
 
-  /**
-   * Computes all pixels that are connected to the pixel at coordinate
-   * <code>(row, col)</code> and within the given distance of the pixel.
-   *
-   * @param image    array containing each pixel's boolean value.
-   * @param row      the first coordinate of the pixel of interest.
-   * @param col      the second coordinate of the pixel of interest.
-   * @param distance the maximum distance at which a pixel is considered.
-   * @return An array where <code>true</code> means that the pixel is within
-   *         <code>distance</code> and connected to the pixel at
-   *         <code>(row, col)</code>.
-   */
-  public static boolean[][] connectedPixels(boolean[][] image, int row, int col, int distance) {
+	/**
+	 * Computes all pixels that are connected to the pixel at coordinate
+	 * <code>(row, col)</code> and within the given distance of the pixel.
+	 *
+	 * @param image    array containing each pixel's boolean value.
+	 * @param row      the first coordinate of the pixel of interest.
+	 * @param col      the second coordinate of the pixel of interest.
+	 * @param distance the maximum distance at which a pixel is considered.
+	 * @return An array where <code>true</code> means that the pixel is within
+	 * <code>distance</code> and connected to the pixel at
+	 * <code>(row, col)</code>.
+	 */
 
-      // Tableau de fin de meme taille que le tableau initial comme précisé dans l'énoncé
-      boolean[][] returningTab = new boolean[image.length][image[0].length];
+
+
+
+	public static boolean[][] connectedPixels(boolean[][] image, int row, int col, int distance) {
+
+	  // Tableau de fin de meme taille que le tableau initial comme précisé dans l'énoncé
+	  boolean[][] returningTab = new boolean[image.length][image[0].length];
+	  returningTab [row][col]=true;
+
+
+
 	  ArrayList<int[]> coordNeighbours = new ArrayList<int[]>();
 
-      // Coordonnées potentiellement utilisable qui part de [ligne-distance][col-distance] jusqu'a [ligne+distance] [col+distance]
-      //int coordonneeXDepart=row-distance, coordonneeXFin=row+distance,coordonneeYDepart=col-distance,coordonneeYFin=col+distance;
-
-      // Si on prend la distance tout autour de image [row] [col], il faut que toute les indices des cases dans ce carré appartiennent au tableau.
-      // Ou si ca depasse les indices du tableau, on réajuste au maximum/minimum du tableau afin de ne  pas avoir index out of bound (on a le droit de le faire car on sait que tout ce qui n'est pas dans l'image est false/blanc).
-
-      //if (row - distance < 0) {
-      //    coordonneeYDepart = 0;
-      //} else if (row + distance > image[0].length) {
-      //    coordonneeYFin = image[0].length;         // Désigne la taille y du tableau mais selon les conditions de la boucle on doit faire -1 ou pas.
-      //}
-
-      //if (col - distance < 0) {
-      //    coordonneeXDepart = 0;
-      //} else if (col + distance > image.length) {
-      //    coordonneeXFin = image.length;            // Désigne la taille x du tableau mais selon les conditions de la boucle on doit faire -1 ou pas.
-      //}
 
 
-
+	  boolean connectiondone = false;                //Variable qui determine la fin de la connection
 	  coordNeighbours.add(new int[]{row, col});
-	  int j =0;
-	  int x = coordNeighbours.get(j)[0];
-	  int y = coordNeighbours.get(j)[1];
+	  int j = 0;
+	  int x;
+	  int y;
+	  boolean[] boolfalse = new boolean[8];
 
 	  while (j < coordNeighbours.size()) {
 
 		  x = coordNeighbours.get(j)[0];
 		  y = coordNeighbours.get(j)[1];
 
-		  if (x >= Math.min(row + distance, image.length) && y >= Math.min(col + distance, image[0].length) && x <= Math.max(row - distance, 0) && y <= Math.max(col - distance, 0)) {
+		  if ((x > row + distance || y >= col + distance ||y < col - distance)|| x <= row - distance) {
 			  return returningTab;
 		  }
+
 
 		  boolean[] neighbours = getNeighbours(image, x, y);
 
@@ -387,52 +380,65 @@ public class Fingerprint {
 
 			  if (neighbours[i] == true) {
 
-				  switch (i) {
-					  case 0:
-						  coordNeighbours.add(new int[]{x - 1, y});
-						  returningTab[x-1][y]=true;
-						  break;
-					  case 1:
-						  coordNeighbours.add(new int[]{x - 1, y + 1});
-						  returningTab[x-1][y+1]=true;
-						  break;
-					  case 2:
-						  coordNeighbours.add(new int[]{x, y + 1});
-						  returningTab[x][y+1]=true;
-						  break;
-					  case 3:
-						  coordNeighbours.add(new int[]{x + 1, y + 1});
-						  returningTab[x+1][y+1]=true;
-						  break;
-					  case 4:
-						  coordNeighbours.add(new int[]{x + 1, y});
-						  returningTab[x+1][y]=true;
-						  break;
-					  case 5:
-						  coordNeighbours.add(new int[]{x + 1, y - 1});
-						  returningTab[x+1][y-1]=true;
-						  break;
-					  case 6:
-						  coordNeighbours.add(new int[]{x, y - 1});
-						  returningTab[x][y-1]=true;
-						  break;
-					  case 7:
-						  coordNeighbours.add(new int[]{x - 1, y - 1});
-						  returningTab[x-1][y-1]=true;
-						  break;
+
+
+						  //Si une des coordonnees a deja été enregistrée avant alors on n'ajoute pas ces nouvelles coordonnees
+						  // Les erreurs d'indices sont pris en compte sur le premier terme
+				  if ((i == 0) && ((j - 1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x - 1, y})))) {
+
+					  coordNeighbours.add(new int[]{x - 1, y});
+					  returningTab[x - 1][y] = true;
+
+				  } else if ((i == 1) && ((j - 1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x - 1, y + 1})))) {
+
+					  coordNeighbours.add(new int[]{x - 1, y + 1});
+					  returningTab[x - 1][y + 1] = true;
+
+				  } else if ((i == 2) && ((j - 1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x, y + 1})))) {
+
+					  coordNeighbours.add(new int[]{x, y + 1});
+					  returningTab[x][y + 1] = true;
+				  }else if ((i==3) && ((j-1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours,new int[]{x + 1, y + 1})))) {
+							  coordNeighbours.add(new int[]{x + 1, y + 1});
+							  returningTab[x + 1][y + 1] = true;
+				  }else if ((i==4) && ((j-1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x + 1, y})))) {
+							  coordNeighbours.add(new int[]{x + 1, y});
+							  returningTab[x + 1][y] = true;
+				  }else if ((i==5) && ((j-1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x + 1, y - 1})))) {
+							  coordNeighbours.add(new int[]{x + 1, y - 1});
+							  returningTab[x + 1][y - 1] = true;
+				  }else if ((i==6) && ((j-1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x, y - 1})))) {
+							  coordNeighbours.add(new int[]{x, y - 1});
+							  returningTab[x][y - 1] = true;
+				  } else if ((i == 7) && ((j - 1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x - 1, y - 1})))) {
+					  coordNeighbours.add(new int[]{x - 1, y - 1});
+					  returningTab[x - 1][y - 1] = true;
+				  } else {
+					  returningTab[x][y]=true;
 				  }
-
-
 			  }
-
 		  }
-		  j += 1;
+		  ++j;
 	  }
-
-
 
 	  return returningTab;
   }
+
+  public static boolean contains(ArrayList<int[]> tab, int[] insidetab) {
+	  for (int i = 0; i < tab.size(); ++i) {
+		  if (Arrays.equals(tab.get(i), insidetab)) {
+			  return true;
+		  }
+
+	  }
+	  return false;
+  }
+
+
+
+
+
+
 
   /**
    * Computes the slope of a minutia using linear regression.
