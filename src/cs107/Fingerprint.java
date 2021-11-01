@@ -369,7 +369,8 @@ public class Fingerprint {
 		  y = coordNeighbours.get(j)[1];
 
 		  if ((x > row + distance || y >= col + distance ||y < col - distance)|| x <= row - distance) {
-			  return returningTab;
+			  ++j;
+			  continue;
 		  }
 
 
@@ -412,8 +413,6 @@ public class Fingerprint {
 				  } else if ((i == 7) && ((j - 1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x - 1, y - 1})))) {
 					  coordNeighbours.add(new int[]{x - 1, y - 1});
 					  returningTab[x - 1][y - 1] = true;
-				  } else {
-					  returningTab[x][y]=true;
 				  }
 			  }
 		  }
@@ -496,7 +495,7 @@ public class Fingerprint {
 		  //counting pixels above and below minutia
 		  for (int i = 0; i < connectedPixels.length; ++i) {
 			  for ( int j = 0 ; j < connectedPixels[i].length; ++j) {
-				  if (i > row) {
+				  if (i >= row) {
 					  pixelsAbove += 1;
 				  }
 				  else {
@@ -512,7 +511,8 @@ public class Fingerprint {
 			  return -Math.PI/2 ;
 		  }
 	  }
-
+	  
+	  //General case
 	  //initialize angle
 	  double angle = Math.atan(slope);
 
@@ -529,7 +529,7 @@ public class Fingerprint {
 	  }
 
 	  //adding pi to angle in the cases where it is necessary
-	  if ((angle >= 0 && pixelsBelow >= pixelsAbove)
+	  if ((angle >= 0 && pixelsBelow > pixelsAbove)
 		||(angle < 0 && pixelsBelow < pixelsAbove)) {
 		  angle += Math.PI;
 	  }
@@ -555,14 +555,15 @@ public class Fingerprint {
 	  double slope = computeSlope(connectedPixels, row, col);
 	  double angle = computeAngle(connectedPixels, row, col, slope);
 	  
+	  System.out.println(slope+"  \n"+angle);
 	  //converting the angle to degrees and rounding
 	  angle = Math.round(Math.toDegrees(angle));
-	  
+	  System.out.println(angle);
 	  //making the angle positive if necessary
 	  if (angle < 0) {
 		  angle += 360;
 	  }
-	  
+	  System.out.println(angle);
 	  //returning the angle as an int
 	  return (int) angle;
   }
@@ -591,7 +592,7 @@ public class Fingerprint {
 			  transitions = transitions(getNeighbours(image, i, j));
 			  
 			  //if the pixel is a minutia (1 or 3 transitions), add it's row, col and orientation in the list
-			  if (transitions==1 || transitions==3) {
+			  if (image[i][j] && (transitions==1 || transitions==3)) {
 				  
 				  orientation = computeOrientation(image, i, j, ORIENTATION_DISTANCE);
 				  minutiae.add(new int[]{i, j, orientation});
