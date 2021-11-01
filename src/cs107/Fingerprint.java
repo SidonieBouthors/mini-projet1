@@ -495,12 +495,14 @@ public class Fingerprint {
 		  //counting pixels above and below minutia
 		  for (int i = 0; i < connectedPixels.length; ++i) {
 			  for ( int j = 0 ; j < connectedPixels[i].length; ++j) {
-				  if (i >= row) {
-					  pixelsAbove += 1;
-				  }
-				  else {
-					  pixelsBelow += 1;
-				  }
+				 if (connectedPixels[i][j]) {
+					  if (i >= row) {
+						  pixelsAbove += 1;
+					  }
+					  else {
+						  pixelsBelow += 1;
+					  }
+				 }
 			  }
 		  }
 		  //returning pi/2 or -pi/2 depending if the line is upwards or downwards
@@ -519,11 +521,13 @@ public class Fingerprint {
 	  //Counting pixels above and below the perpendicular to the slope (going through the minutia)
 	  for (int i = 0; i < connectedPixels.length; ++i) {
 		  for ( int j = 0 ; j < connectedPixels[i].length; ++j) {
-			  if ((row-i) >= (-1/slope) * (j-col)) {
-				  pixelsAbove += 1;
-			  }
-			  else {
-				  pixelsBelow += 1;
+			  if (connectedPixels[i][j]) {
+				  if ((row-i) >= (-1/slope) * (j-col)) {
+					  pixelsAbove += 1;
+				  }
+				  else {
+					  pixelsBelow += 1;
+				  }
 			  }
 		  }
 	  }
@@ -555,15 +559,14 @@ public class Fingerprint {
 	  double slope = computeSlope(connectedPixels, row, col);
 	  double angle = computeAngle(connectedPixels, row, col, slope);
 	  
-	  System.out.println(slope+"  \n"+angle);
 	  //converting the angle to degrees and rounding
 	  angle = Math.round(Math.toDegrees(angle));
-	  System.out.println(angle);
+	  
 	  //making the angle positive if necessary
 	  if (angle < 0) {
 		  angle += 360;
 	  }
-	  System.out.println(angle);
+	  
 	  //returning the angle as an int
 	  return (int) angle;
   }
