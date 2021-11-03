@@ -148,7 +148,7 @@ public class Main {
     System.out.print("testConnectedPixels1: ");
     boolean[][] image = {{false, false, false, false},
             			{false, false, false, false},
-            			{false, false, true, true},
+            			{false, false, true, false},
             			{false, false, false, false}};
     boolean[][] expected = {{false, false, false, false},
                             {false, false, false, false},

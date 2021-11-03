@@ -346,22 +346,22 @@ public class Fingerprint {
 
 	public static boolean[][] connectedPixels(boolean[][] image, int row, int col, int distance) {
 
+		assert (image [row][col]==true);
+
 	  // Tableau de fin de meme taille que le tableau initial comme précisé dans l'énoncé
 	  boolean[][] returningTab = new boolean[image.length][image[0].length];
-	  returningTab [row][col]=true;
+
 
 
 
 	  ArrayList<int[]> coordNeighbours = new ArrayList<int[]>();
 
-
-
-	  boolean connectiondone = false;                //Variable qui determine la fin de la connection
 	  coordNeighbours.add(new int[]{row, col});
+	  returningTab [row][col]=true;
+
 	  int j = 0;
 	  int x;
 	  int y;
-	  boolean[] boolfalse = new boolean[8];
 
 	  while (j < coordNeighbours.size()) {
 
