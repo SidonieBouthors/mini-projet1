@@ -346,7 +346,7 @@ public class Fingerprint {
 
 	public static boolean[][] connectedPixels(boolean[][] image, int row, int col, int distance) {
 
-		assert (image [row][col]==true);
+	  assert (image [row][col]==true);
 
 	  // Tableau de fin de meme taille que le tableau initial comme précisé dans l'énoncé
 	  boolean[][] returningTab = new boolean[image.length][image[0].length];
@@ -368,7 +368,7 @@ public class Fingerprint {
 		  x = coordNeighbours.get(j)[0];
 		  y = coordNeighbours.get(j)[1];
 
-		  if ((x > row + distance || y >= col + distance ||y <= col - distance)|| x <= row - distance) {
+		  if ((x >= row + distance || y >= col + distance ||y <= col - distance)|| x <= row - distance) {
 			  ++j;
 			  continue;
 		  }

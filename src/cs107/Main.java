@@ -32,6 +32,7 @@ public class Main {
     //testApplyTranslation();
     //testThin();
     testWithSkeleton();
+    testWithSkeletonConnectedPixels();
     
     //testDrawSkeleton("1_1"); //draw skeleton of fingerprint 1_1.png
     //testDrawSkeleton("1_2"); //draw skeleton of fingerprint 1_2.png
@@ -366,6 +367,12 @@ public class Main {
     Helper.drawMinutia(colorImageSkeleton1, minutiae1);
     Helper.writeARGB("minutiae_skeletonTest.png", colorImageSkeleton1);
   }
+  
+  public static void testWithSkeletonConnectedPixels() {
+	    boolean[][] skeleton1 = Helper.readBinary("resources/test_inputs/skeletonTest.png");
+	    boolean[][] pixelsMinutiae1 = Fingerprint.connectedPixels(skeleton1, 39, 21, 4);
+	    Helper.writeBinary("connectedPixels.png", pixelsMinutiae1);
+	  }
 
   public static void printMinutiae(List<int[]> minutiae) {
     for (int[] minutia : minutiae) {
