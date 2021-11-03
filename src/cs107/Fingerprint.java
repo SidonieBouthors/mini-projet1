@@ -368,7 +368,7 @@ public class Fingerprint {
 		  x = coordNeighbours.get(j)[0];
 		  y = coordNeighbours.get(j)[1];
 
-		  if ((x > row + distance || y >= col + distance ||y < col - distance)|| x <= row - distance) {
+		  if ((x > row + distance || y >= col + distance ||y <= col - distance)|| x <= row - distance) {
 			  ++j;
 			  continue;
 		  }
