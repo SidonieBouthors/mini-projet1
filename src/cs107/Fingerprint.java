@@ -668,7 +668,10 @@ public class Fingerprint {
   public static int[] applyTransformation(int[] minutia, int centerRow, int centerCol, int rowTranslation,
       int colTranslation, int rotation) {
 	  
-	  return null;
+	  int[] newMinutia = applyRotation(minutia, centerRow, centerCol, rotation);
+	  newMinutia = applyTranslation(newMinutia, rowTranslation, colTranslation);
+	  
+	  return newMinutia;
   }
 
   /**
