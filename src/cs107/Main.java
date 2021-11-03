@@ -23,18 +23,19 @@ public class Main {
     //testGetNeighbours();
 	//testBlackNeighbours();
 	//testTransitions();
-    testConnectedPixels1();
-    testConnectedPixels2();
-    testConnectedPixels3();
-    testOrientation();
+    //testConnectedPixels1();
+    //testConnectedPixels2();
+    //testConnectedPixels3();
+    testConnectedPixels4();
+    //testOrientation();
     //testApplyRotation();
     //testApplyTranslation();
-    testThin();
-    testWithSkeleton();
+    //testThin();
+    //testWithSkeleton();
     
-    testDrawSkeleton("1_1"); //draw skeleton of fingerprint 1_1.png
-    testDrawSkeleton("1_2"); //draw skeleton of fingerprint 1_2.png
-    testDrawSkeleton("2_1"); //draw skeleton of fingerprint 2_1.png
+    //testDrawSkeleton("1_1"); //draw skeleton of fingerprint 1_1.png
+    //testDrawSkeleton("1_2"); //draw skeleton of fingerprint 1_2.png
+    //testDrawSkeleton("2_1"); //draw skeleton of fingerprint 2_1.png
 
     //testDrawMinutiae("1_1"); //draw minutiae of fingerprint 1_1.png
     //testDrawMinutiae("1_2"); //draw minutiae of fingerprint 1_2.png
@@ -207,6 +208,27 @@ public class Main {
                             {true,  true,  false, false, false},
                             {false, true,  false, false, false}};
     boolean[][] connectedPixels = Fingerprint.connectedPixels(image, 2, 1, 2);
+    if (arrayEqual(connectedPixels, expected)) {
+      System.out.println("OK");
+    } else {
+      System.out.println("ERROR");
+      System.out.print("Expected: ");
+      printArray(expected);
+      System.out.print("Computed: ");
+      printArray(connectedPixels);
+    }
+  }
+  public static void testConnectedPixels4() {
+    System.out.print("testConnectedPixels4: ");
+    boolean[][] image = {{true,  true, false, true,  true},
+                        {true,  false, true,  false,  true},
+                        {true,  true,  false, true, true},
+                        {true, true,  false, false, true}};
+    boolean[][] expected = {{false,  true, false, true,  false},
+                            {false,  false, true,  false,  false},
+                            {false,  true,  false, true, false},
+                          {false, false,  false, false, false}};
+    boolean[][] connectedPixels = Fingerprint.connectedPixels(image, 1, 2, 1);
     if (arrayEqual(connectedPixels, expected)) {
       System.out.println("OK");
     } else {
