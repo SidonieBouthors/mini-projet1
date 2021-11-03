@@ -23,15 +23,15 @@ public class Main {
     //testGetNeighbours();
 	//testBlackNeighbours();
 	//testTransitions();
-    //testConnectedPixels1();
-    //testConnectedPixels2();
-    //testConnectedPixels3();
+    testConnectedPixels1();
+    testConnectedPixels2();
+    testConnectedPixels3();
     testConnectedPixels4();
     //testOrientation();
     //testApplyRotation();
     //testApplyTranslation();
     //testThin();
-    //testWithSkeleton();
+    testWithSkeleton();
     
     //testDrawSkeleton("1_1"); //draw skeleton of fingerprint 1_1.png
     //testDrawSkeleton("1_2"); //draw skeleton of fingerprint 1_2.png
