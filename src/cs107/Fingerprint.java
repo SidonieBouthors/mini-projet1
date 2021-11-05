@@ -686,10 +686,16 @@ public class Fingerprint {
    * @param rotation       the rotation.
    * @return the list of transformed minutiae.
    */
-  public static List<int[]> applyTransformation(List<int[]> minutiae, int centerRow, int centerCol, int rowTranslation,
-      int colTranslation, int rotation) {
-	  //TODO implement
-	  return null;
+  public static List<int[]> applyTransformation(List<int[]> minutiae, int centerRow, int centerCol, int rowTranslation, int colTranslation, int rotation) {
+
+	  ArrayList<int[]> tab = new ArrayList<>();
+
+
+	  for (int i = 0; i < minutiae.size(); i++) {
+		  tab.add(applyTransformation(minutiae.get(i),centerRow,centerCol,rowTranslation,colTranslation,rotation));
+	  }
+
+	  return tab;
   }
   /**
    * Counts the number of overlapping minutiae.
@@ -702,10 +708,28 @@ public class Fingerprint {
    *                       minutiae to consider them as overlapping.
    * @return the number of overlapping minutiae.
    */
-  public static int matchingMinutiaeCount(List<int[]> minutiae1, List<int[]> minutiae2, int maxDistance,
-      int maxOrientation) {
-	  //TODO implement
-	  return 0;
+  public static int matchingMinutiaeCount(List<int[]> minutiae1, List<int[]> minutiae2, int maxDistance, int maxOrientation) {
+	int diffOrientation;
+	double distanceEuclidienne;
+	int minutiaeCount = 0;
+
+
+	  for (int i = 0; i < minutiae1.size(); ++i) {
+		  for (int j = 0; j < minutiae2.size(); ++j) {
+
+			  distanceEuclidienne = Math.sqrt(Math.pow((minutiae1.get(i)[0] - minutiae2.get(j)[0]),2) + Math.pow(minutiae1.get(i)[1] - minutiae2.get(j)[1],2));
+
+			  diffOrientation = Math.abs(minutiae1.get(i)[2] - minutiae2.get(j)[2]);
+
+			  if (distanceEuclidienne <= maxDistance && diffOrientation <= maxOrientation) {
+				  ++minutiaeCount;
+			  }
+
+
+		  }
+
+	  }
+	return minutiaeCount;
   }
 
   /**
@@ -717,7 +741,32 @@ public class Fingerprint {
    *         otherwise.
    */
   public static boolean match(List<int[]> minutiae1, List<int[]> minutiae2) {
-	  //TODO implement
+
+
+	  for (int i = 0; i < minutiae1.size(); i++) {
+		  for (int j = 0; j < minutiae2.size(); j++) {
+
+			  int rotation = minutiae1.get(i)[2] - minutiae2.get(j)[2];
+			  int rowTranslation = minutiae1.get(i)[0]-minutiae2.get(j)[0];
+			  int colTranslation = minutiae1.get(i)[1]-minutiae2.get(j)[1];
+
+			  for (int k = rotation-MATCH_ANGLE_OFFSET; k <= rotation + MATCH_ANGLE_OFFSET ; ++k) {
+
+				  List<int[]> newMinutiae2 = applyTransformation(minutiae2,minutiae1.get(i)[0],minutiae1.get(i)[1],rowTranslation,colTranslation,k);
+
+				  if (matchingMinutiaeCount(minutiae1, newMinutiae2, DISTANCE_THRESHOLD, ORIENTATION_THRESHOLD) >= FOUND_THRESHOLD) {
+					  return true;
+				  }
+
+			  }
+
+
+
+		  }
+
+	  }
+
 	  return false;
+
   }
 }

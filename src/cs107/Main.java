@@ -23,16 +23,16 @@ public class Main {
     //testGetNeighbours();
 	//testBlackNeighbours();
 	//testTransitions();
-    testConnectedPixels1();
-    testConnectedPixels2();
-    testConnectedPixels3();
-    //testConnectedPixels5();
+    //testConnectedPixels1();
+    //testConnectedPixels2();
+    //testConnectedPixels3();
+    //testConnectedPixels4();
     //testOrientation();
     //testApplyRotation();
     //testApplyTranslation();
     //testThin();
-    testWithSkeleton();
-    testWithSkeletonConnectedPixels();
+    //testWithSkeleton();
+    //testWithSkeletonConnectedPixels();
     
     //testDrawSkeleton("1_1"); //draw skeleton of fingerprint 1_1.png
     //testDrawSkeleton("1_2"); //draw skeleton of fingerprint 1_2.png
@@ -46,21 +46,21 @@ public class Main {
     // Test overall functionality
     //---------------------------
 	//compare 1_1.png with 1_2.png: they are supposed to match
-    //testCompareFingerprints("1_1", "1_2", true);  //expected match: true
+    testCompareFingerprints("1_1", "1_2", true);  //expected match: true
     
     //compare 1_1.png with 2_1.png: they are not supposed to match
-    //testCompareFingerprints("1_1", "2_1", false); //expected match: false
+    testCompareFingerprints("1_1", "2_1", false); //expected match: false
 
     //compare 1_1 with all other images of the same finger
-    //testCompareAllFingerprints("1_1", 1, true);
+    testCompareAllFingerprints("1_1", 1, true);
 
     //compare 1_1 with all images of finger 2
-    //testCompareAllFingerprints("1_1", 2, false);
+    testCompareAllFingerprints("1_1", 2, false);
 
     //compare 1_1 with all images of finger 3 to 16
-    //for (int f = 3; f <= 16; f++) {
-    //    testCompareAllFingerprints("1_1", f, false);
-    //}	
+    for (int f = 3; f <= 16; f++) {
+        testCompareAllFingerprints("1_1", f, false);
+    }
   }
 
   /**
@@ -148,15 +148,15 @@ public class Main {
    */
   public static void testConnectedPixels1() {
     System.out.print("testConnectedPixels1: ");
-    boolean[][] image = {{false, false, false, false},
-            			{false, false, false, false},
-            			{false, false, true, false},
-            			{false, false, false, false}};
-    boolean[][] expected = {{false, false, false, false},
-                            {false, false, false, false},
-                            {false, false, true, false},
+    boolean[][] image = {{true, false, false, true},
+                         {false, false, true, true},
+                         {false, true, true, false},
+                         {false, false, false, false}};
+    boolean[][] expected = {{false, false, false, true},
+                            {false, false, true, true},
+                            {false, true, true, false},
                             {false, false, false, false}};
-    boolean[][] connectedPixels = Fingerprint.connectedPixels(image, 2, 2, 10);
+    boolean[][] connectedPixels = Fingerprint.connectedPixels(image, 2, 1, 10);
     if (arrayEqual(connectedPixels, expected)) {
       System.out.println("OK");
     } else {
@@ -219,22 +219,17 @@ public class Main {
       printArray(connectedPixels);
     }
   }
-  
-  /**
-   * This function is here to help you test the functionalities of
-   * connectedPixels. You are free to modify and/or delete it.
-   */
-  public static void testConnectedPixels5() {
-    System.out.print("testConnectedPixels5: ");
-    boolean[][] image = {{true,  false, false, true,  true},
-                         {true,  false, true,  true,  false},
-                         {true,  true,  false, false, false},
-                         {false, true,  false, true,  false}};
-    boolean[][] expected = {{true,  false, false, true,  false},
-                            {true,  false, true,  true,  false},
+  public static void testConnectedPixels4() {
+    System.out.print("testConnectedPixels4: ");
+    boolean[][] image = {{true,  true, false, true,  true},
+                        {true,  false, true,  false,  true},
+                        {true,  true,  false, true, true},
+                        {true, true,  true, true, true}};
+    boolean[][] expected = {{false,  false, false, false,  false},
+                            {true,  false, true,  false,  false},
                             {true,  true,  false, false, false},
-                            {false, true,  false, false, false}};
-    boolean[][] connectedPixels = Fingerprint.connectedPixels(image, 2, 1, 2);
+                          {true, true,  true, false, false}};
+    boolean[][] connectedPixels = Fingerprint.connectedPixels(image, 2, 1, 1);
     if (arrayEqual(connectedPixels, expected)) {
       System.out.println("OK");
     } else {
