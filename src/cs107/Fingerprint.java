@@ -305,7 +305,7 @@ public class Fingerprint {
 	  
 	  //initialize variable used to break loop & keeping track of image to thin
 	  boolean thin = false;
-	  int n =0;
+	  
 	  //iterate while image is not thin 
 	  while (!thin) {
 		  
