@@ -617,19 +617,12 @@ public class Fingerprint {
    */
   public static int[] applyRotation(int[] minutia, int centerRow, int centerCol, int rotation) {
 	  
-	  double x = (minutia[0] - centerCol);
-	  double y = (centerRow - minutia[1]);
+	  double x = (minutia[1] - centerCol);
+	  double y = (centerRow - minutia[0]);
 	  double rot= Math.toRadians(rotation);
-	  int newRow= (int) (centerRow - (x * Math.sin(rot) - y * Math.cos(rot)));
+	  int newRow= (int) (centerRow - (x * Math.sin(rot) + y * Math.cos(rot)));
 	  int newCol= (int) ((x * Math.cos(rot) - y * Math.sin(rot)) + centerCol);
-	  int newOrientation = minutia[2] + rotation;
-	  
-	  while (newOrientation < 0) {
-		  newOrientation += 360;
-	  } 
-	  while (newOrientation >= 360){
-		  newOrientation -= 360;
-	  }
+	  int newOrientation = Math.floorMod(minutia[2] + rotation,360);
 	  
 	  return new int[] {newRow, newCol, newOrientation};
   }
