@@ -38,14 +38,17 @@ public class Main {
     //testDrawSkeleton("1_2"); //draw skeleton of fingerprint 1_2.png
     //testDrawSkeleton("2_1"); //draw skeleton of fingerprint 2_1.png
 	
-	/*
+	
     testDrawMinutiae("1_1"); //draw minutiae of fingerprint 1_1.png
-    testDrawMinutiae("1_2"); //draw minutiae of fingerprint 1_2.png
+    testDrawMinutiae("1_6"); //draw minutiae of fingerprint 1_2.png
+    
+    /*
     testDrawMinutiae("2_1"); //draw minutiae of fingerprint 2_1.png
 	*/
     //---------------------------
     // Test overall functionality
     //---------------------------
+	/*
 	//compare 1_1.png with 1_2.png: they are supposed to match
     testCompareFingerprints("1_1", "1_2", true);  //expected match: true
     
@@ -59,9 +62,9 @@ public class Main {
     testCompareAllFingerprints("1_1", 2, false);
 
     //compare 1_1 with all images of finger 3 to 16
-    /*for (int f = 3; f <= 16; f++) {
+    for (int f = 3; f <= 16; f++) {
         testCompareAllFingerprints("1_1", f, false);
-    }*/
+    }
     
     //compare 3_1 with all other images of the same finger
     testCompareAllFingerprints("3_1", 3, true);
@@ -78,8 +81,9 @@ public class Main {
   //compare 4_1 with all other images of the same finger
     testCompareAllFingerprints("7_1", 7, true);
     
-  //compare 4_1 with all other images of the same finger
+    //compare 4_1 with all other images of the same finger
     testCompareAllFingerprints("8_1", 8, true);
+    */
     
   }
 
