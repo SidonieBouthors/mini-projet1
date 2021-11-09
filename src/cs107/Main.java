@@ -18,8 +18,7 @@ public class Main {
     //---------------------------
     // Tests functions separately
     //---------------------------
-	System.out.println("Uncomment the function calls in Main.main to test your implementation.");
-	System.out.println("The provided tests are not complete. You have to write your own tests.");
+
     //testGetNeighbours();
 	//testBlackNeighbours();
 	//testTransitions();
@@ -38,9 +37,15 @@ public class Main {
     //testDrawSkeleton("1_2"); //draw skeleton of fingerprint 1_2.png
     //testDrawSkeleton("2_1"); //draw skeleton of fingerprint 2_1.png
 	
-	
-    testDrawMinutiae("1_1"); //draw minutiae of fingerprint 1_1.png
-    testDrawMinutiae("1_6"); //draw minutiae of fingerprint 1_2.png
+	 //testCompareAllToFirst();
+	 //testCompareAllTo("1_1");
+	 //testCompareAllTo("1_2");
+	 //testCompareAllTo("1_5");
+	 testCompareFingerprints("1_1", "1_6", true);
+	 //testDrawMinutiae("1_1"); //draw minutiae of fingerprint 1_1.png
+     //testDrawMinutiae("1_6"); //draw minutiae of fingerprint 1_2.png
+	  
+    
     
     /*
     testDrawMinutiae("2_1"); //draw minutiae of fingerprint 2_1.png
@@ -63,27 +68,8 @@ public class Main {
 
     //compare 1_1 with all images of finger 3 to 16
     for (int f = 3; f <= 16; f++) {
-        testCompareAllFingerprints("1_1", f, false);
-    }
-    
-    //compare 3_1 with all other images of the same finger
-    testCompareAllFingerprints("3_1", 3, true);
-    
-    //compare 4_1 with all other images of the same finger
-    testCompareAllFingerprints("4_1", 4, true);
-    
-    //compare 4_1 with all other images of the same finger
-    testCompareAllFingerprints("5_1", 5, true);
-    
-  //compare 4_1 with all other images of the same finger
-    testCompareAllFingerprints("6_1", 6, true);
-    
-  //compare 4_1 with all other images of the same finger
-    testCompareAllFingerprints("7_1", 7, true);
-    
-    //compare 4_1 with all other images of the same finger
-    testCompareAllFingerprints("8_1", 8, true);
-    */
+        testCompareAllFingerprints("1_1", f, false); 
+    }*/
     
   }
 
@@ -447,6 +433,25 @@ public class Main {
 		  testCompareFingerprints(name1, finger + "_" + i, expectedResult);
 	  }
   }
+  
+  /**
+   * This function is an overall test between image 1_n and all other fingerprints from finger n
+   */
+  public static void testCompareAllToFirst() {
+	  for (int i = 1; i <= 16; i++) {
+		  testCompareAllFingerprints(i + "_" + 1, i, true);
+	  }
+  }
+  
+  /**
+   * This function is an overall test between one image and all other fingerprints
+   */
+  public static void testCompareAllTo(String image) {
+	  for (int i = 1; i <= 16; i++) {
+		  testCompareAllFingerprints(image, i, image.charAt(0) == i);
+	  }
+  }
+  
 
   /*
    * Helper functions to print and compare arrays

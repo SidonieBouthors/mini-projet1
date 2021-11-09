@@ -537,6 +537,11 @@ public class Fingerprint {
 		||(angle < 0 && pixelsBelow < pixelsAbove)) {
 		  angle += Math.PI;
 	  }
+	  
+	  //temp 
+	  if (slope < 2.5237604 && slope > 2.5237600) {
+		  System.out.print("angle: " + angle + " pixelsAbove: " + pixelsAbove + "  pixelsBelow: " + pixelsBelow);
+	  }
 	  //returning angle
 	  return angle;
   }
@@ -565,6 +570,12 @@ public class Fingerprint {
 	  //making the angle positive if necessary
 	  if (angle < 0) {
 		  angle += 360;
+	  }
+	  
+	  //temp
+	  if ((int) angle == 68) {
+		  System.out.println("slope" + slope);
+		  Helper.writeBinary("1_1minutia68connectedpixels.png", connectedPixels);
 	  }
 	  
 	  //returning the angle as an int
@@ -617,12 +628,17 @@ public class Fingerprint {
    */
   public static int[] applyRotation(int[] minutia, int centerRow, int centerCol, int rotation) {
 	  
-	  double x = (minutia[1] - centerCol);
-	  double y = (centerRow - minutia[0]);
-	  double rot= Math.toRadians(rotation);
-	  int newRow= (int) (centerRow - (x * Math.sin(rot) + y * Math.cos(rot)));
-	  int newCol= (int) ((x * Math.cos(rot) - y * Math.sin(rot)) + centerCol);
-	  int newOrientation = Math.floorMod(minutia[2] - rotation, 360);
+	  double x = minutia[1] - centerCol;
+	  double y = centerRow - minutia[0];
+	  double radianRotation= Math.toRadians(rotation);
+	  double newX = x * Math.cos(radianRotation) - y * Math.sin(radianRotation);
+	  double newY = x * Math.sin(radianRotation) + y * Math.cos(radianRotation);
+	  int newRow= (int) Math.round(centerRow - newY);
+	  int newCol= (int) Math.round( newX + centerCol);
+	  int newOrientation = Math.floorMod(minutia[2] + rotation, 360);
+	  
+	  //temp
+	  //System.out.println("\nCurrent Rotation:"+minutia[2]+"   Change " + rotation);
 	  
 	  return new int[] {newRow, newCol, newOrientation};
   }
@@ -709,6 +725,7 @@ public class Fingerprint {
 	  int row1, row2; 
 	  int col1, col2;
 	  int orientation1, orientation2;
+	  ArrayList<int[][]> pairs = new ArrayList<int[][]>(); 
 
 	  for (int i = 0; i < minutiae1.size(); ++i) {
 		  for (int j = 0; j < minutiae2.size(); ++j) {
@@ -725,6 +742,10 @@ public class Fingerprint {
 			  diffOrientation = Math.abs(orientation1 - orientation2);
 	
 			  if (distanceEuclidienne <= maxDistance && diffOrientation <= maxOrientation) {
+				  
+				  //temp
+				  pairs.add(new int[][] {minutiae1.get(i), minutiae2.get(j)});
+				  
 				  ++minutiaeCount;
 			  }
 	
@@ -732,8 +753,27 @@ public class Fingerprint {
 		  }
 	
 	  }
+	//temp
+	if (maxMatchingMinutiae < minutiaeCount) {
+	System.out.println("\n\n********Test******* ("+minutiaeCount+")");
+	for (int[][] pair:pairs) {
+		System.out.print("\n\nPair: ");
+		for (int[] minutia:pair) {
+			System.out.println("\n");
+			for (int element:minutia) {
+				System.out.print(element + "  ");
+			}
+		}
+	}
+	//maxMatchingMinutiae = minutiaeCount;
+	}
+	
+	  
 	return minutiaeCount;
   }
+  
+  //temp
+  public static int maxMatchingMinutiae = 19;
 
   /**
    * Compares the minutiae from two fingerprints.
@@ -754,11 +794,20 @@ public class Fingerprint {
 			  int colTranslation = minutiae2.get(j)[1] - minutiae1.get(i)[1];
 			  int rotation = minutiae2.get(j)[2] - minutiae1.get(i)[2];
 			  
+			  //System.out.println("\nrotation = " + rotation);
+			  
 			  for (int k = rotation - MATCH_ANGLE_OFFSET; k <= rotation + MATCH_ANGLE_OFFSET ; ++k) {
 
-				  List<int[]> newMinutiae2 = applyTransformation(minutiae2,minutiae1.get(i)[0],minutiae1.get(i)[1],rowTranslation,colTranslation,k);
-
-				  if (matchingMinutiaeCount(minutiae1, newMinutiae2, DISTANCE_THRESHOLD, ORIENTATION_THRESHOLD) >= FOUND_THRESHOLD) {
+				  List<int[]> newMinutiae2 = applyTransformation(minutiae2,minutiae1.get(i)[0],minutiae1.get(i)[1],rowTranslation,colTranslation, k);
+				  
+				  int matchingMinutiaeCount = matchingMinutiaeCount(minutiae1, newMinutiae2, DISTANCE_THRESHOLD, ORIENTATION_THRESHOLD);
+				  
+				  
+				  if (matchingMinutiaeCount >= FOUND_THRESHOLD) {
+					  
+					  //temp
+					  System.out.println("\nk = " + k);
+					  System.out.println("Matching" + matchingMinutiaeCount + "  ");
 					  
 					  return true;
 				  }
