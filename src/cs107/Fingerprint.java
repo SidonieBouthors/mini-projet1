@@ -622,7 +622,7 @@ public class Fingerprint {
 	  double rot= Math.toRadians(rotation);
 	  int newRow= (int) (centerRow - (x * Math.sin(rot) + y * Math.cos(rot)));
 	  int newCol= (int) ((x * Math.cos(rot) - y * Math.sin(rot)) + centerCol);
-	  int newOrientation = Math.floorMod(minutia[2] + rotation,360);
+	  int newOrientation = Math.floorMod(minutia[2] - rotation, 360);
 	  
 	  return new int[] {newRow, newCol, newOrientation};
   }
@@ -661,10 +661,10 @@ public class Fingerprint {
   public static int[] applyTransformation(int[] minutia, int centerRow, int centerCol, int rowTranslation,
       int colTranslation, int rotation) {
 	  
-	  int[] newMinutia = applyRotation(minutia, centerRow, centerCol, rotation);
-	  newMinutia = applyTranslation(newMinutia, rowTranslation, colTranslation);
+	  int[] transformedMinutia = applyRotation(minutia, centerRow, centerCol, rotation);
+	  transformedMinutia = applyTranslation(transformedMinutia, rowTranslation, colTranslation);
 	  
-	  return newMinutia;
+	  return transformedMinutia;
   }
 
   /**
@@ -681,14 +681,14 @@ public class Fingerprint {
    */
   public static List<int[]> applyTransformation(List<int[]> minutiae, int centerRow, int centerCol, int rowTranslation, int colTranslation, int rotation) {
 
-	  ArrayList<int[]> tab = new ArrayList<>();
+	  List<int[]> transformedMinutiae = new ArrayList<>();
 
 
-	  for (int i = 0; i < minutiae.size(); i++) {
-		  tab.add(applyTransformation(minutiae.get(i),centerRow,centerCol,rowTranslation,colTranslation,rotation));
+	  for (int i = 0; i < minutiae.size(); ++i) {
+		  transformedMinutiae.add(applyTransformation(minutiae.get(i),centerRow,centerCol,rowTranslation,colTranslation,rotation));
 	  }
 
-	  return tab;
+	  return transformedMinutiae;
   }
   /**
    * Counts the number of overlapping minutiae.
@@ -702,25 +702,35 @@ public class Fingerprint {
    * @return the number of overlapping minutiae.
    */
   public static int matchingMinutiaeCount(List<int[]> minutiae1, List<int[]> minutiae2, int maxDistance, int maxOrientation) {
-	int diffOrientation;
-	double distanceEuclidienne;
-	int minutiaeCount = 0;
-
+	  
+	  int diffOrientation;
+	  double distanceEuclidienne;
+	  int minutiaeCount = 0;
+	  int row1, row2; 
+	  int col1, col2;
+	  int orientation1, orientation2;
 
 	  for (int i = 0; i < minutiae1.size(); ++i) {
 		  for (int j = 0; j < minutiae2.size(); ++j) {
-
-			  distanceEuclidienne = Math.sqrt(Math.pow((minutiae1.get(i)[0] - minutiae2.get(j)[0]),2) + Math.pow(minutiae1.get(i)[1] - minutiae2.get(j)[1],2));
-
-			  diffOrientation = Math.abs(minutiae1.get(i)[2] - minutiae2.get(j)[2]);
-
+			  
+			  row1 = minutiae1.get(i)[0];
+			  col1 = minutiae1.get(i)[1];
+			  orientation1 = minutiae1.get(i)[2];
+			  row2 = minutiae2.get(j)[0];
+			  col2 = minutiae2.get(j)[1];
+			  orientation2 = minutiae2.get(j)[2];
+			  
+			  distanceEuclidienne = Math.sqrt(Math.pow(row1 - row2 , 2) + Math.pow(col1 - col2, 2));
+	
+			  diffOrientation = Math.abs(orientation1 - orientation2);
+	
 			  if (distanceEuclidienne <= maxDistance && diffOrientation <= maxOrientation) {
 				  ++minutiaeCount;
 			  }
-
-
+	
+	
 		  }
-
+	
 	  }
 	return minutiaeCount;
   }
@@ -739,15 +749,17 @@ public class Fingerprint {
 	  for (int i = 0; i < minutiae1.size(); i++) {
 		  for (int j = 0; j < minutiae2.size(); j++) {
 
-			  int rotation = minutiae1.get(i)[2] - minutiae2.get(j)[2];
-			  int rowTranslation = minutiae1.get(i)[0]-minutiae2.get(j)[0];
-			  int colTranslation = minutiae1.get(i)[1]-minutiae2.get(j)[1];
-
-			  for (int k = rotation-MATCH_ANGLE_OFFSET; k <= rotation + MATCH_ANGLE_OFFSET ; ++k) {
+			  
+			  int rowTranslation = minutiae2.get(j)[0] - minutiae1.get(i)[0];
+			  int colTranslation = minutiae2.get(j)[1] - minutiae1.get(i)[1];
+			  int rotation = minutiae2.get(j)[2] - minutiae1.get(i)[2];
+			  
+			  for (int k = rotation - MATCH_ANGLE_OFFSET; k <= rotation + MATCH_ANGLE_OFFSET ; ++k) {
 
 				  List<int[]> newMinutiae2 = applyTransformation(minutiae2,minutiae1.get(i)[0],minutiae1.get(i)[1],rowTranslation,colTranslation,k);
 
 				  if (matchingMinutiaeCount(minutiae1, newMinutiae2, DISTANCE_THRESHOLD, ORIENTATION_THRESHOLD) >= FOUND_THRESHOLD) {
+					  
 					  return true;
 				  }
 
@@ -758,7 +770,7 @@ public class Fingerprint {
 		  }
 
 	  }
-
+	  
 	  return false;
 
   }

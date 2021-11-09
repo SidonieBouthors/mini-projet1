@@ -28,8 +28,8 @@ public class Main {
     //testConnectedPixels3();
     //testConnectedPixels4();
     //testOrientation();
-    testApplyRotation();
-    testApplyTranslation();
+    //testApplyRotation();
+    //testApplyTranslation();
     //testThin();
     //testWithSkeleton();
     //testWithSkeletonConnectedPixels();
@@ -37,11 +37,12 @@ public class Main {
     //testDrawSkeleton("1_1"); //draw skeleton of fingerprint 1_1.png
     //testDrawSkeleton("1_2"); //draw skeleton of fingerprint 1_2.png
     //testDrawSkeleton("2_1"); //draw skeleton of fingerprint 2_1.png
-
+	
+	/*
     testDrawMinutiae("1_1"); //draw minutiae of fingerprint 1_1.png
     testDrawMinutiae("1_2"); //draw minutiae of fingerprint 1_2.png
     testDrawMinutiae("2_1"); //draw minutiae of fingerprint 2_1.png
-	
+	*/
     //---------------------------
     // Test overall functionality
     //---------------------------
@@ -52,15 +53,34 @@ public class Main {
     testCompareFingerprints("1_1", "2_1", false); //expected match: false
 
     //compare 1_1 with all other images of the same finger
-    //testCompareAllFingerprints("1_1", 1, true);
+    testCompareAllFingerprints("1_1", 1, true);
 
     //compare 1_1 with all images of finger 2
-    //testCompareAllFingerprints("1_1", 2, false);
+    testCompareAllFingerprints("1_1", 2, false);
 
     //compare 1_1 with all images of finger 3 to 16
     /*for (int f = 3; f <= 16; f++) {
         testCompareAllFingerprints("1_1", f, false);
     }*/
+    
+    //compare 3_1 with all other images of the same finger
+    testCompareAllFingerprints("3_1", 3, true);
+    
+    //compare 4_1 with all other images of the same finger
+    testCompareAllFingerprints("4_1", 4, true);
+    
+    //compare 4_1 with all other images of the same finger
+    testCompareAllFingerprints("5_1", 5, true);
+    
+  //compare 4_1 with all other images of the same finger
+    testCompareAllFingerprints("6_1", 6, true);
+    
+  //compare 4_1 with all other images of the same finger
+    testCompareAllFingerprints("7_1", 7, true);
+    
+  //compare 4_1 with all other images of the same finger
+    testCompareAllFingerprints("8_1", 8, true);
+    
   }
 
   /**
