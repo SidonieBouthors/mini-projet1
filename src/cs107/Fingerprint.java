@@ -566,7 +566,7 @@ public class Fingerprint {
 	  int pixelsAbove = 0;
 	  int pixelsBelow = 0;
 
-	  //Particular case of vertical line 
+	  //****Particular case of vertical line**** 
 	  if (slope == Double.POSITIVE_INFINITY) {
 		  //counting pixels above and below minutia
 		  for (int i = 0; i < connectedPixels.length; ++i) {
@@ -590,9 +590,31 @@ public class Fingerprint {
 		  }
 	  }
 	  
-	  //General case
-	  //initialize angle
+	  //initialize angle (used in General Case and Particular case slope == 0
 	  double angle = Math.atan(slope);
+	  
+	  //****Particular case of slope == 0****
+	  if (Double.compare(slope, 0.0) == 0) {
+		  for (int i = 0; i < connectedPixels.length; ++i) {
+			  for ( int j = 0 ; j < connectedPixels[i].length; ++j) {
+				  if (connectedPixels[i][j]) {
+					  //pixels above are pixels to the left of the minutia, pixels below are to the right
+					  if ((j - col) <= 0) {
+						  pixelsAbove += 1;
+					  }
+					  else {
+						  pixelsBelow += 1;
+					  }
+				  }
+			  }
+		  }
+		  if (pixelsAbove > pixelsBelow) {
+			  angle += Math.PI;
+		  }
+		  return angle;
+	  }
+	  
+	  //****General Case****
 
 	  //Counting pixels above and below the perpendicular to the slope (going through the minutia)
 	  for (int i = 0; i < connectedPixels.length; ++i) {
@@ -607,18 +629,20 @@ public class Fingerprint {
 			  }
 		  }
 	  }
-
-	  //adding pi to angle in the cases where it is necessary
-	  if ((angle >= 0 && pixelsBelow > pixelsAbove)
+	  
+	  //temp
+	  //System.out.println("Angle brut: " + angle + " Slope: " + slope);
+	  //System.out.println("Perpendicular slope: " + (-1/slope * col));
+	  
+	  //adding pi to angle in the cases where it is necessary (angle = 0 is excluded, dealt with in particular case above)
+	  if ((angle > 0 && pixelsBelow > pixelsAbove)
 		||(angle < 0 && pixelsBelow < pixelsAbove)) {
 		  angle += Math.PI;
 	  }
 	  
-	  //temp 
-	  /*
-	  if (slope < 2.5237604 && slope > 2.5237600) {
-		  System.out.print("angle: " + angle + " pixelsAbove: " + pixelsAbove + "  pixelsBelow: " + pixelsBelow);
-	  }*/
+	  //temp
+	  System.out.println("Angle ajusté: " + angle + " pixelsAbove: " + pixelsAbove + "  pixelsBelow: " + pixelsBelow);
+	  
 	  //returning angle
 	  return angle;
   }
@@ -655,6 +679,9 @@ public class Fingerprint {
 		  Helper.writeBinary("1_1minutia68connectedpixels.png", connectedPixels);
 		  Helper.writeBinary("1_1minutia68image.png", image);
 	  }*/
+	  
+	  //temp
+	  System.out.println("Angle in degrees: " + angle);
 	  
 	  //returning the angle as an int
 	  return (int) angle;
