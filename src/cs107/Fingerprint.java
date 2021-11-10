@@ -593,13 +593,14 @@ public class Fingerprint {
 	  //initialize angle (used in General Case and Particular case slope == 0
 	  double angle = Math.atan(slope);
 	  
+	  
 	  //****Particular case of slope == 0****
 	  if (Double.compare(slope, 0.0) == 0) {
 		  for (int i = 0; i < connectedPixels.length; ++i) {
 			  for ( int j = 0 ; j < connectedPixels[i].length; ++j) {
 				  if (connectedPixels[i][j]) {
 					  //pixels above are pixels to the left of the minutia, pixels below are to the right
-					  if ((j - col) <= 0) {
+					  if ((j - col) < 0) {
 						  pixelsAbove += 1;
 					  }
 					  else {
@@ -613,6 +614,7 @@ public class Fingerprint {
 		  }
 		  return angle;
 	  }
+	  
 	  
 	  //****General Case****
 
@@ -641,7 +643,7 @@ public class Fingerprint {
 	  }
 	  
 	  //temp
-	  System.out.println("Angle ajusté: " + angle + " pixelsAbove: " + pixelsAbove + "  pixelsBelow: " + pixelsBelow);
+	  //System.out.println("Angle ajusté: " + angle + " pixelsAbove: " + pixelsAbove + "  pixelsBelow: " + pixelsBelow);
 	  
 	  //returning angle
 	  return angle;
@@ -681,7 +683,7 @@ public class Fingerprint {
 	  }*/
 	  
 	  //temp
-	  System.out.println("Angle in degrees: " + angle);
+	  //System.out.println("Angle in degrees: " + angle);
 	  
 	  //returning the angle as an int
 	  return (int) angle;
@@ -824,34 +826,33 @@ public class Fingerprint {
    */
   public static int matchingMinutiaeCount(List<int[]> minutiae1, List<int[]> minutiae2, int maxDistance, int maxOrientation) {
 	  
-	  int diffOrientation;
-	  double distanceEuclidienne;
 	  int minutiaeCount = 0;
-	  int row1, row2; 
-	  int col1, col2;
-	  int orientation1, orientation2;
+	  
 	  ArrayList<int[][]> pairs = new ArrayList<int[][]>(); 
 
 	  for (int i = 0; i < minutiae1.size(); ++i) {
 		  for (int j = 0; j < minutiae2.size(); ++j) {
 			  
-			  row1 = minutiae1.get(i)[0];
-			  col1 = minutiae1.get(i)[1];
-			  orientation1 = minutiae1.get(i)[2];
-			  row2 = minutiae2.get(j)[0];
-			  col2 = minutiae2.get(j)[1];
-			  orientation2 = minutiae2.get(j)[2];
+			  int row1 = minutiae1.get(i)[0];
+			  int col1 = minutiae1.get(i)[1];
+			  int orientation1 = minutiae1.get(i)[2];
+			  int row2 = minutiae2.get(j)[0];
+			  int col2 = minutiae2.get(j)[1];
+			  int orientation2 = minutiae2.get(j)[2];
 			  
-			  distanceEuclidienne = Math.sqrt(Math.pow(row1 - row2 , 2) + Math.pow(col1 - col2, 2));
+			  double distanceEuclidienne = Math.sqrt(Math.pow(row1 - row2 , 2) + Math.pow(col1 - col2, 2));
 	
-			  diffOrientation = Math.abs(orientation1 - orientation2);
+			  int diffOrientation = Math.abs(orientation1 - orientation2);
 	
 			  if (distanceEuclidienne <= maxDistance && diffOrientation <= maxOrientation) {
 				  
 				  //temp
-				  pairs.add(new int[][] {minutiae1.get(i), minutiae2.get(j)});
+				  //pairs.add(new int[][] {minutiae1.get(i), minutiae2.get(j)});
 				  
 				  ++minutiaeCount;
+				  
+				  //we do not want to match one minutiae m1 to several minutiae m2 (the opposite is fine)
+				  break;
 			  }
 	
 	
@@ -859,6 +860,7 @@ public class Fingerprint {
 	
 	  }
 	//temp
+	/*
 	if (maxMatchingMinutiae < minutiaeCount) {
 	System.out.println("\n\n********Test******* ("+minutiaeCount+")");
 	for (int[][] pair:pairs) {
@@ -871,14 +873,14 @@ public class Fingerprint {
 		}
 	}
 	//maxMatchingMinutiae = minutiaeCount;
-	}
+	}*/
 	
 	  
 	return minutiaeCount;
   }
   
   //temp
-  public static int maxMatchingMinutiae = 19;
+  //public static int maxMatchingMinutiae = 19;
 
   /**
    * Compares the minutiae from two fingerprints.
@@ -912,7 +914,7 @@ public class Fingerprint {
 					  
 					  //temp
 					  System.out.println("\nk = " + k);
-					  System.out.println("Matching" + matchingMinutiaeCount + "  ");
+					  System.out.println("Matching: " + matchingMinutiaeCount + "  ");
 					  
 					  return true;
 				  }
