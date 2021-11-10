@@ -41,10 +41,12 @@ public class Main {
 	 //testCompareAllTo("1_1");
 	 //testCompareAllTo("1_2");
 	 //testCompareAllTo("1_5");
-	 testCompareFingerprints("1_1", "1_6", true);
+	 testCompareFingerprints("1_1", "1_1", true);
+	 //testCompareFingerprints("1_1", "1_6", true);
 	 //testDrawMinutiae("1_1"); //draw minutiae of fingerprint 1_1.png
      //testDrawMinutiae("1_6"); //draw minutiae of fingerprint 1_2.png
 	  
+	 //testConnectedPixel68();
     
     
     /*
@@ -250,6 +252,16 @@ public class Main {
       printArray(connectedPixels);
     }
   }
+  
+  
+  //temp
+  public static void testConnectedPixel68() {
+	    System.out.print("testConnectedPixel68: ");
+	    boolean[][] image = Fingerprint.thin(Helper.readBinary("resources/fingerprints/1_1.png"));
+	    boolean[][] connectedPixels = Fingerprint.connectedPixels(image, 233, 37, Fingerprint.ORIENTATION_DISTANCE);
+	    Helper.writeBinary("test68.png", connectedPixels);
+	    
+	  }
 
   /**
    * This function is here to help you test the functionalities of

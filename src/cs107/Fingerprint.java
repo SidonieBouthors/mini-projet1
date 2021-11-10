@@ -350,33 +350,39 @@ public class Fingerprint {
 
 	  // Tableau de fin de meme taille que le tableau initial comme précisé dans l'énoncé
 	  boolean[][] returningTab = new boolean[image.length][image[0].length];
-
-
-
-
+	  
+	  //initialize list to store coordinates of all connectedPixels
 	  ArrayList<int[]> coordNeighbours = new ArrayList<int[]>();
 
 	  coordNeighbours.add(new int[]{row, col});
 	  returningTab [row][col]=true;
 
 	  int j = 0;
-	  int x;
-	  int y;
+	  int x = row;
+	  int y = col;
+	  int[] coords = new int[] {x , y};
 
 	  while (j < coordNeighbours.size()) {
-
+		  
 		  x = coordNeighbours.get(j)[0];
 		  y = coordNeighbours.get(j)[1];
-
-		  if ((x >= row + distance || y >= col + distance ||y <= col - distance)|| x <= row - distance) {
+		  
+		  //Check if current pixel is within distance of minutia
+		  
+		  /*
+		  if ((x >= row + distance || y >= col + distance || y <= col - distance)|| x <= row - distance) {
+			  
+			  //temp
+			  System.out.println("Out of bounds : x = " + x + " and y = " + y);
+			  
 			  ++j;
 			  continue;
-		  }
+		  }*/
 
-
+		  //get the neighbors of current pixels
 		  boolean[] neighbours = getNeighbours(image, x, y);
 
-
+		  
 		  for (int i = 0; i <= 7; ++i) {
 
 			  if (neighbours[i] == true) {
@@ -384,41 +390,111 @@ public class Fingerprint {
 				  //Si une des coordonnees a deja été enregistrée avant alors on n'ajoute pas ses nouvelles coordonnees
 				  // Les erreurs d'indices sont pris en compte sur le premier terme
 				  
-				  if ((i == 0) && ((j - 1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x - 1, y})))) {
+				  switch (i) {
+				  		case 0: coords = new int[] {x - 1, y};
+				  				break;
+				  		case 1: coords = new int[] {x - 1, y + 1};
+		  						break;
+				  		case 2: coords = new int[] {x, y + 1};
+		  						break;
+				  		case 3: coords = new int[] {x + 1, y + 1};
+		  						break;
+				  		case 4: coords = new int[] {x + 1, y};
+		  						break;
+				  		case 5: coords = new int[] {x + 1, y - 1};
+		  						break;
+				  		case 6: coords = new int[] {x, y - 1};
+		  						break;
+				  		case 7: coords = new int[] {x - 1, y - 1};
+		  						break;
+				  }
+				  
+				  if (!contains(coordNeighbours, coords) && (coords[0] <= row + distance && coords[1] <= col + distance  && coords[0] >= row - distance && coords[1] >= col - distance)) {
+					  coordNeighbours.add(coords);
+					  returningTab[coords[0]][coords[1]] = true;
+					  
+					//temp
+					  //System.out.println("\n Neighbour " + i + " of pixel " + j);
+				  }
+				  
+				  /*
+				  if (i == 0 && !contains(coordNeighbours, new int[]{x - 1, y})) {
 
 					  coordNeighbours.add(new int[]{x - 1, y});
 					  returningTab[x - 1][y] = true;
+					  
+					  //temp
+					  System.out.println("\n Neighbour " + i + " of pixel " + j);
 
-				  } else if ((i == 1) && ((j - 1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x - 1, y + 1})))) {
+				  } else if (i == 1 && !contains(coordNeighbours, new int[]{x - 1, y + 1})) {
 
 					  coordNeighbours.add(new int[]{x - 1, y + 1});
 					  returningTab[x - 1][y + 1] = true;
+					  
+					//temp
+					  System.out.println("\n Neighbour " + i + " of pixel " + j);
 
 				  } else if ((i == 2) && ((j - 1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x, y + 1})))) {
-
+					  
 					  coordNeighbours.add(new int[]{x, y + 1});
 					  returningTab[x][y + 1] = true;
+					  
+					//temp
+					  System.out.println("\n Neighbour " + i + " of pixel " + j);
+					  
 				  } else if ((i==3) && ((j-1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours,new int[]{x + 1, y + 1})))) {
-							  coordNeighbours.add(new int[]{x + 1, y + 1});
-							  returningTab[x + 1][y + 1] = true;
+					  
+					  coordNeighbours.add(new int[]{x + 1, y + 1});
+					  returningTab[x + 1][y + 1] = true;
+					  
+					//temp
+					  System.out.println("\n Neighbour " + i + " of pixel " + j);
+					  
 				  } else if ((i==4) && ((j-1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x + 1, y})))) {
-							  coordNeighbours.add(new int[]{x + 1, y});
-							  returningTab[x + 1][y] = true;
+					  
+					  coordNeighbours.add(new int[]{x + 1, y});
+					  returningTab[x + 1][y] = true;
+					  
+					//temp
+					  System.out.println("\n Neighbour " + i + " of pixel " + j);
+					  
 				  } else if ((i==5) && ((j-1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x + 1, y - 1})))) {
-							  coordNeighbours.add(new int[]{x + 1, y - 1});
-							  returningTab[x + 1][y - 1] = true;
+					  
+					  coordNeighbours.add(new int[]{x + 1, y - 1});
+					  returningTab[x + 1][y - 1] = true;
+					  
+					//temp
+					  System.out.println("\n Neighbour " + i + " of pixel " + j);
+					  
 				  } else if ((i==6) && ((j-1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x, y - 1})))) {
-							  coordNeighbours.add(new int[]{x, y - 1});
-							  returningTab[x][y - 1] = true;
+					  
+					  coordNeighbours.add(new int[]{x, y - 1});
+					  returningTab[x][y - 1] = true;
+					  
+					//temp
+					  System.out.println("\n Neighbour " + i + " of pixel " + j);
+					  
 				  } else if ((i == 7) && ((j - 1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x - 1, y - 1})))) {
+					  
 					  coordNeighbours.add(new int[]{x - 1, y - 1});
 					  returningTab[x - 1][y - 1] = true;
-				  }
+					  
+					//temp
+					  System.out.println("\n Neighbour " + i + " of pixel " + j);
+				  } */
 			  }
 		  }
 		  ++j;
 	  }
-
+	  
+	  //temp
+	  /*
+	  for ( int[] pixel:coordNeighbours) {
+		  System.out.println("\nPixel: ");
+		  for (int element:pixel) {
+			  System.out.print(element + " ");
+		  }
+	  } */
 	  return returningTab;
   }
 
@@ -539,9 +615,10 @@ public class Fingerprint {
 	  }
 	  
 	  //temp 
+	  /*
 	  if (slope < 2.5237604 && slope > 2.5237600) {
 		  System.out.print("angle: " + angle + " pixelsAbove: " + pixelsAbove + "  pixelsBelow: " + pixelsBelow);
-	  }
+	  }*/
 	  //returning angle
 	  return angle;
   }
@@ -573,10 +650,11 @@ public class Fingerprint {
 	  }
 	  
 	  //temp
-	  if ((int) angle == 68) {
+	  /*if ((int) angle == 68) {
 		  System.out.println("slope" + slope);
 		  Helper.writeBinary("1_1minutia68connectedpixels.png", connectedPixels);
-	  }
+		  Helper.writeBinary("1_1minutia68image.png", image);
+	  }*/
 	  
 	  //returning the angle as an int
 	  return (int) angle;
