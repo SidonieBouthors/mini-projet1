@@ -37,11 +37,12 @@ public class Main {
     //testDrawSkeleton("1_2"); //draw skeleton of fingerprint 1_2.png
     //testDrawSkeleton("2_1"); //draw skeleton of fingerprint 2_1.png
 	
+	 //printMinutiae(Fingerprint.applyTransformation(Fingerprint.extract(Helper.readBinary("resources/test_outputs/skeleton_1_1.png")), 4, 3, 0, 0, -1));
 	 //testCompareAllToFirst();
 	 testCompareAllTo("1_1");
 	 //testCompareAllTo("1_2");
 	 //testCompareAllTo("1_5");
-	 //testCompareFingerprints("1_5", "2_3", true);
+	 //testCompareFingerprints("1_1", "1_1", true);
 	 //testCompareFingerprints("1_1", "1_6", true);
 	 //testDrawMinutiae("1_1"); //draw minutiae of fingerprint 1_1.png
      //testDrawMinutiae("1_6"); //draw minutiae of fingerprint 1_2.png
@@ -355,10 +356,27 @@ public class Main {
     boolean[][] image1 = Helper.readBinary("resources/fingerprints/" + name + ".png");
     boolean[][] skeleton1 = Fingerprint.thin(image1);
     List<int[]> minutia1 = Fingerprint.extract(skeleton1);
+
     int[][] colorImageSkeleton1 = Helper.fromBinary(skeleton1);
     Helper.drawMinutia(colorImageSkeleton1, minutia1);
     Helper.writeARGB("minutiae_" + name + ".png", colorImageSkeleton1);
-  }
+  }	
+  public static void testWriteMinutiae(String name) {
+	    boolean[][] image1 = Helper.readBinary("resources/fingerprints/" + name + ".png");
+	    boolean[][] skeleton1 = Fingerprint.thin(image1);
+	    List<int[]> minutia1 = Fingerprint.extract(skeleton1);
+	    
+	    //temp
+	    System.out.println("\n\n********Minutiae List*******");
+	    int n = 1;
+		for (int[] minutia:minutia1) {
+			System.out.print("\n" + n + " : ");
+			for (int element:minutia) {
+				System.out.print(element + "  ");
+			}
+			n++;
+		}
+	}
 
   /**
    * This function is here to help you test the functionalities of extract
@@ -460,7 +478,7 @@ public class Main {
    */
   public static void testCompareAllTo(String image) {
 	  for (int i = 1; i <= 16; i++) {
-		  testCompareAllFingerprints(image, i, image.charAt(0) == i);
+		  testCompareAllFingerprints(image, i, (int) image.charAt(0) == (char) i + '0');
 	  }
   }
   

@@ -742,7 +742,7 @@ public class Fingerprint {
 	  double newY = x * Math.sin(radianRotation) + y * Math.cos(radianRotation);
 	  int newRow= (int) Math.round(centerRow - newY);
 	  int newCol= (int) Math.round( newX + centerCol);
-	  int newOrientation = Math.floorMod(minutia[2] + rotation, 360);
+	  int newOrientation = minutia[2] + rotation;  // modulo????
 	  
 	  //temp
 	  //System.out.println("\nCurrent Rotation:"+minutia[2]+"   Change " + rotation);
@@ -873,8 +873,8 @@ public class Fingerprint {
 		}
 	}
 	//maxMatchingMinutiae = minutiaeCount;
-	}*/
-	
+	}
+	*/
 	  
 	return minutiaeCount;
   }
@@ -891,7 +891,9 @@ public class Fingerprint {
    *         otherwise.
    */
   public static boolean match(List<int[]> minutiae1, List<int[]> minutiae2) {
-
+	  
+	  //temp
+	  int maxMatchings =0;
 
 	  for (int i = 0; i < minutiae1.size(); i++) {
 		  for (int j = 0; j < minutiae2.size(); j++) {
@@ -901,6 +903,7 @@ public class Fingerprint {
 			  int colTranslation = minutiae2.get(j)[1] - minutiae1.get(i)[1];
 			  int rotation = minutiae2.get(j)[2] - minutiae1.get(i)[2];
 			  
+			  //temp
 			  //System.out.println("\nrotation = " + rotation);
 			  
 			  for (int k = rotation - MATCH_ANGLE_OFFSET; k <= rotation + MATCH_ANGLE_OFFSET ; ++k) {
@@ -915,8 +918,13 @@ public class Fingerprint {
 					  //temp
 					  System.out.println("\nk = " + k);
 					  System.out.println("Matching: " + matchingMinutiaeCount + "  ");
-					  
+					  System.out.println(minutiae1.get(i)[0] + "  " + minutiae1.get(i)[1]+ "  " +rowTranslation+ "  " +colTranslation);
 					  return true;
+				  }
+				  
+				  //temp
+				  if (matchingMinutiaeCount > maxMatchings) {
+					  maxMatchings = matchingMinutiaeCount;
 				  }
 
 			  }
@@ -926,6 +934,8 @@ public class Fingerprint {
 		  }
 
 	  }
+	  
+	  System.out.println("\nMatching: " + maxMatchings + "  ");
 	  
 	  return false;
 
