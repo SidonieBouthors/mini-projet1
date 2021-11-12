@@ -139,6 +139,7 @@ public class Fingerprint {
   public static int blackNeighbours(boolean[] neighbours) {
 	  
 	  //the input is assumed in the correct format
+	  assert (neighbours != null);
 	  assert (neighbours.length == 8);
 	  
 	  int numberBlackNeighbours = 0;
@@ -336,7 +337,7 @@ public class Fingerprint {
 	  boolean[][] connectedPixels = new boolean[image.length][image[0].length];
 	  
 	  //initialise list to store coordinates of all connectedPixels
-	  ArrayList<int[]> coordConnectedPixels = new ArrayList<int[]>();
+	  ArrayList<int[]> coordConnectedPixels = new ArrayList<>();
 	  
 	  //adding the minutia pixel in the final image and coordinate list
 	  coordConnectedPixels.add(new int[]{row, col});
@@ -357,6 +358,9 @@ public class Fingerprint {
 
 		  //get the neighbours of current pixel
 		  boolean[] neighbours = getNeighbours(image, x, y);
+		  
+		  //assert neighbours is not null
+		  assert (neighbours != null);
 
 		  //iterate over every neighbour of the current pixel (if it is black and within distance, add to connectedPixels)
 		  for (int i = 0; i <= 7; ++i) {
@@ -589,7 +593,7 @@ public class Fingerprint {
   public static List<int[]> extract(boolean[][] image) {
 	  
 	  //initialise List and other variables used in the loop
-	  List<int[]> minutiae = new ArrayList<int[]>();
+	  List<int[]> minutiae = new ArrayList<>();
 	  int transitions;
 	  int orientation;
 	  
