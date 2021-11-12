@@ -82,7 +82,7 @@ public class Fingerprint {
 	  - If the pixels in upper left and lower right corners of the pixel 
 	  at (row, col) exist (are in bounds): then all neighbour pixels exist 
 	  (as the image is assumed a rectangle)
-	  - Therefore we do not need to check conditions for each neighbour
+	  - Therefore we do not need to check conditions for each neighbour individually
 	  (more efficient as this will be the case for most pixels of the image) 
 	   */
       if (row + 1 < image.length && row - 1 >= 0 && col + 1 < image[row].length && col - 1 >= 0 ) {
