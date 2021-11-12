@@ -72,7 +72,7 @@ public class Fingerprint {
 	  
 	  //if row and col refer to a pixel out of image bounds, return null
 	  if(row >= image.length || col >= image[0].length) {
-		  return null;
+		  return null; 
 	  }
 	  
 	  //initialise array of neighbours
@@ -96,7 +96,6 @@ public class Fingerprint {
           neighbours[7] = image[row - 1][col-1];
           return neighbours;
       }
-      
       //*Case of pixels that did not fit previous criteria (border pixels)*
       
       //Up Middle -> 0
@@ -196,15 +195,13 @@ public class Fingerprint {
 	  assert(image1!=null & image2!=null);
 	  
 	  //Dealing with images with different amount of rows (not identical)
-	  if (image1.length != image2.length) {
-		  return false;
-	  }
+	  if (image1.length != image2.length) { return false; }
 
 	  for (int i = 0; i < image1.length; ++i) {
+		  
 		  //Dealing with images with different amounts of columns (not identical)
-		  if (image1[i].length != image2[i].length) {
-			  return false;
-		  }
+		  if (image1[i].length != image2[i].length) { return false; }
+		  
 		  //Checking that every element is the same in each image
 		  for (int j = 0; j < image1[i].length; ++j) {
 			  if (image1[i][j] != image2[i][j]) {
@@ -258,13 +255,11 @@ public class Fingerprint {
 							
 					  imageCopy[i][j] = false; //black pixel not copied over
 				  }
-				  else {
-					  imageCopy[i][j] = image[i][j]; //pixel copied over
-				  }
+				  //does not correspond to step conditions
+				  else { imageCopy[i][j] = image[i][j]; } //pixel copied over
 			  }
-			  else {
-				  imageCopy[i][j] = image[i][j]; //pixel copied over
-			  }
+			  //does not correspond to common conditions
+			  else { imageCopy[i][j] = image[i][j]; } //pixel copied over
 		  }
 	  }
 	  return imageCopy;
@@ -414,7 +409,6 @@ public class Fingerprint {
 		  if (Arrays.equals(ints, element)) {
 			  return true;
 		  }
-
 	  }
 	  return false;
   }
@@ -446,18 +440,15 @@ public class Fingerprint {
 			  }
 		  }
 	  }
-	  
 	  //Particular case of vertical line
 	  if (sumSquareX == 0) {
-		  return Double.POSITIVE_INFINITY;
-	  }
+		  return Double.POSITIVE_INFINITY; }
+	  
 	  //Conditions for the two possible formulas of the slope
 	  else if (sumSquareX >= sumSquareY) {
-		  return (sumProductXY / sumSquareX);
-	  }
+		  return (sumProductXY / sumSquareX); }
 	  else {
-		  return (sumSquareY / sumProductXY);
-	  }
+		  return (sumSquareY / sumProductXY); }
   }
 
   /**
@@ -483,26 +474,21 @@ public class Fingerprint {
 			  for ( int j = 0 ; j < connectedPixels[i].length; ++j) {
 				 if (connectedPixels[i][j]) {
 					  if (i >= row) {
-						  pixelsAbove += 1;
-					  }
+						  pixelsAbove += 1; }
 					  else {
-						  pixelsBelow += 1;
-					  }
+						  pixelsBelow += 1; }
 				 }
 			  }
 		  }
 		  //returning pi/2 or -pi/2 depending if the minutia point upwards or downwards
 		  if (pixelsBelow <= pixelsAbove) {
-			  return Math.PI/2 ;
-		  }
+			  return Math.PI/2 ; }
 		  else {
-			  return -Math.PI/2 ;
-		  }
+			  return -Math.PI/2 ; }
 	  }
 	  
 	  //initialise angle (used in *General Case* and *Particular case slope == 0*
 	  double angle = Math.atan(slope);
-	  
 	  
 	  //****Particular case of horizontal line (slope == 0)****
 	  if (Double.compare(slope, 0.0) == 0) {
@@ -511,22 +497,18 @@ public class Fingerprint {
 				  if (connectedPixels[i][j]) {
 					  //pixels above are pixels to the left of the minutia, pixels below are to the right
 					  if ((j - col) < 0) {
-						  pixelsAbove += 1;
-					  }
+						  pixelsAbove += 1; }
 					  else {
-						  pixelsBelow += 1;
-					  }
+						  pixelsBelow += 1; }
 				  }
 			  }
 		  }
 		  //add pi when necessary
 		  if (pixelsAbove > pixelsBelow) {
-			  angle += Math.PI;
-		  }
+			  angle += Math.PI; }
 		  //returning angle ( 0 or pi )
 		  return angle;
 	  }
-	  
 	  
 	  //****General Case****
 
@@ -744,10 +726,7 @@ public class Fingerprint {
 				  //we do not want to match one minutiae m1 to several minutiae m2 (the opposite is fine)
 				  break;
 			  }
-	
-	
 		  }
-	
 	  }
 	/* Test Code
 	if (maxMatchingMinutiae < minutiaeCount) {
@@ -807,10 +786,9 @@ public class Fingerprint {
 					  System.out.println("Minutia: [" + m1[0] + ", " + m1[1]+ ", " + m1[2]+ "]");
 					  System.out.println("Translation: " + rowTranslation + ", " + colTranslation);
 					  
-					  
 					  return true;
 				  }
-
+				  
 				  /*Test Code to count the max number of matching*/
 				  if (matchingMinutiaeCount > maxMatchings) {
 					  maxMatchings = matchingMinutiaeCount;
@@ -818,12 +796,9 @@ public class Fingerprint {
 			  }
 		  }
 	  }
-	  
 	  /*Test Code to print data about the Matching (when fingerprint are not the same)*/
 	  System.out.println("\nMatching: " + maxMatchings + "  ");
 	  
-	  
 	  return false;
-
   }
 }
