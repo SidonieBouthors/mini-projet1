@@ -174,7 +174,7 @@ public class Fingerprint {
 	  int numberTransitions = 0;
 	  
 	  // Dealing with case of transition 7-0
-	  if (neighbours[7] && neighbours[0]) {
+	  if (!neighbours[7] && neighbours[0]) {
 		  numberTransitions += 1;
 	  }
 	  
@@ -831,19 +831,19 @@ public class Fingerprint {
 	  
 	  //ArrayList<int[][]> pairs = new ArrayList<int[][]>();
 
-	  for (int i = 0; i < minutiae1.size(); ++i) {
-		  for (int j = 0; j < minutiae2.size(); ++j) {
+	  for (int[] m1 : minutiae1) {
+		  for (int[] m2 : minutiae2) {
 			  
-			  int row1 = minutiae1.get(i)[0];
-			  int col1 = minutiae1.get(i)[1];
-			  int orientation1 = minutiae1.get(i)[2];
-			  int row2 = minutiae2.get(j)[0];
-			  int col2 = minutiae2.get(j)[1];
-			  int orientation2 = minutiae2.get(j)[2];
+			  int row1 = m1[0];
+			  int col1 = m1[1];
+			  int orientation1 = m1[2];
+			  int row2 = m2[0];
+			  int col2 = m2[1];
+			  int orientation2 = m2[2];
 			  
-			  double distanceEuclidienne = Math.sqrt(Math.pow(row1 - row2 , 2) + Math.pow(col1 - col2, 2));
+			  double distanceEuclidienne = Math.sqrt(Math.pow(m1[0] - m2[0] , 2) + Math.pow(m1[1] - m2[1], 2));
 	
-			  int diffOrientation = Math.abs(orientation1 - orientation2);
+			  int diffOrientation = Math.abs(m1[2] - m2[2]);
 	
 			  if (distanceEuclidienne <= maxDistance && diffOrientation <= maxOrientation) {
 				  

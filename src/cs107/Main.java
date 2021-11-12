@@ -39,7 +39,7 @@ public class Main {
 	
 	 //printMinutiae(Fingerprint.applyTransformation(Fingerprint.extract(Helper.readBinary("resources/test_outputs/skeleton_1_1.png")), 4, 3, 0, 0, -1));
 	 //testCompareAllToFirst();
-	 //testCompareAllTo("1_1");
+	 testCompareAllTo("1_1");
 	 //testCompareAllTo("1_2");
 	 //testCompareAllTo("1_5");
 	 testCompareFingerprints("1_1", "1_2", true);
