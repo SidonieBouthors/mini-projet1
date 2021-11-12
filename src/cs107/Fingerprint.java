@@ -919,6 +919,7 @@ public class Fingerprint {
 					  System.out.println("\nk = " + k);
 					  System.out.println("Matching: " + matchingMinutiaeCount + "  ");
 					  System.out.println(minutiae1.get(i)[0] + "  " + minutiae1.get(i)[1]+ "  " +rowTranslation+ "  " +colTranslation);
+					  
 					  return true;
 				  }
 				  
