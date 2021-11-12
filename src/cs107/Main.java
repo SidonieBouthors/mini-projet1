@@ -22,8 +22,8 @@ public class Main {
     //testGetNeighbours();
 	//testBlackNeighbours();
 	//testTransitions();
-    testConnectedPixels1();
-    testConnectedPixels2();
+    //testConnectedPixels1();
+    //testConnectedPixels2();
     //testConnectedPixels3();
     //testConnectedPixels4();
     //testOrientation();
@@ -38,12 +38,15 @@ public class Main {
     //testDrawSkeleton("2_1"); //draw skeleton of fingerprint 2_1.png
 	
 	 //printMinutiae(Fingerprint.applyTransformation(Fingerprint.extract(Helper.readBinary("resources/test_outputs/skeleton_1_1.png")), 4, 3, 0, 0, -1));
-	 //testCompareAllToFirst();
+	 
+	  //testCompareAllToFirst();
 	 testCompareAllTo("1_1");
-	 //testCompareAllTo("1_2");
-	 //testCompareAllTo("1_5");
+	 testCompareAllTo("1_2");
+	 testCompareAllTo("1_5");
+	  
 	 //testCompareFingerprints("1_1", "1_2", true);
 	 //testCompareFingerprints("1_1", "1_6", true);
+	  
 	 //testDrawMinutiae("1_1"); //draw minutiae of fingerprint 1_1.png
      //testDrawMinutiae("1_6"); //draw minutiae of fingerprint 1_2.png
 	  
@@ -455,7 +458,7 @@ public class Main {
   /**
    * This function is here to help you test the overall functionalities. It will
    * compare the fingerprint in the file <code>name1.png</code> with all the eight 
-   * fingerprints of the given finger (second parameter). 
+   * fingerprint of the given finger (second parameter). 
    * The third parameter indicates if we expected a match or not.
    */
   public static void testCompareAllFingerprints(String name1, int finger, boolean expectedResult) {
@@ -465,7 +468,7 @@ public class Main {
   }
   
   /**
-   * This function is an overall test between image 1_n and all other fingerprints from finger n
+   * This function is an overall test between image 1_n and all other fingerprint from finger n
    */
   public static void testCompareAllToFirst() {
 	  for (int i = 1; i <= 16; i++) {
@@ -474,7 +477,7 @@ public class Main {
   }
   
   /**
-   * This function is an overall test between one image and all other fingerprints
+   * This function is an overall test between one image and all other fingerprint
    */
   public static void testCompareAllTo(String image) {
 	  for (int i = 1; i <= 16; i++) {

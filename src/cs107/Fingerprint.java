@@ -781,7 +781,7 @@ public class Fingerprint {
   public static boolean match(List<int[]> minutiae1, List<int[]> minutiae2) {
 	  
 	  //Test Code
-	  //int maxMatchings =0;
+	  int maxMatchings =0;
 
 	  //iterate over all minutia from minutiae1 and minutiae2
 	  for (int [] m1 : minutiae1) {
@@ -801,27 +801,27 @@ public class Fingerprint {
 
 				  if (matchingMinutiaeCount >= FOUND_THRESHOLD) {
 
-					  /*Test Code to print data about the Matching
+					  /*Test Code to print data about the Matching*/
 					  System.out.println("\nMatching: " + matchingMinutiaeCount);
 					  System.out.println("Rotation = " + k);
 					  System.out.println("Minutia: [" + m1[0] + ", " + m1[1]+ ", " + m1[2]+ "]");
 					  System.out.println("Translation: " + rowTranslation + ", " + colTranslation);
-					  */
+					  
 					  
 					  return true;
 				  }
 
-				  /*Test Code to count the max number of matching
+				  /*Test Code to count the max number of matching*/
 				  if (matchingMinutiaeCount > maxMatchings) {
 					  maxMatchings = matchingMinutiaeCount;
-				  }*/
+				  }
 			  }
 		  }
 	  }
 	  
-	  /*Test Code to print data about the Matching (when fingerprint are not the same)
+	  /*Test Code to print data about the Matching (when fingerprint are not the same)*/
 	  System.out.println("\nMatching: " + maxMatchings + "  ");
-	  */
+	  
 	  
 	  return false;
 
