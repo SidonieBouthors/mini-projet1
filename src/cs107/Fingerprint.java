@@ -348,7 +348,7 @@ public class Fingerprint {
 
 	  assert (image [row][col]==true);
 
-	  // Tableau de fin de meme taille que le tableau initial comme précisé dans l'énoncé
+	  // Ending tab
 	  boolean[][] returningTab = new boolean[image.length][image[0].length];
 	  
 	  //initialize list to store coordinates of all connectedPixels
@@ -362,8 +362,11 @@ public class Fingerprint {
 	  int y = col;
 	  int[] coords = new int[] {x , y};
 
+	  // The goal of this algorithm is to iterate through the connected pixels with the method getneighbour. We begin from the minutia until we don't find another NEW connected pixel.
+
 	  while (j < coordNeighbours.size()) {
-		  
+
+		  //x and y will only be the coordinates of every connected pixels
 		  x = coordNeighbours.get(j)[0];
 		  y = coordNeighbours.get(j)[1];
 		  
@@ -379,7 +382,7 @@ public class Fingerprint {
 			  continue;
 		  }*/
 
-		  //get the neighbors of current pixels
+		  //get the neighbours of current pixels
 		  boolean[] neighbours = getNeighbours(image, x, y);
 
 		  
@@ -387,9 +390,7 @@ public class Fingerprint {
 
 			  if (neighbours[i] == true) {
 
-				  //Si une des coordonnees a deja été enregistrée avant alors on n'ajoute pas ses nouvelles coordonnees
-				  // Les erreurs d'indices sont pris en compte sur le premier terme
-				  
+				  //If one of the coordinates has already been registered before then we don't add this new coordinate. To not be stuck in an infinite loop.
 				  switch (i) {
 				  		case 0: coords = new int[] {x - 1, y};
 				  				break;
@@ -497,7 +498,7 @@ public class Fingerprint {
 	  } */
 	  return returningTab;
   }
-
+	// The goal of this method is to chech if an arraylist of int [] contains a special int[]
   public static boolean contains(ArrayList<int[]> tab, int[] insidetab) {
 	  for (int i = 0; i < tab.size(); ++i) {
 		  if (Arrays.equals(tab.get(i), insidetab)) {
