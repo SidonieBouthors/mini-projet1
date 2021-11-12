@@ -150,7 +150,7 @@ public class Fingerprint {
 	  
 	  //iterate through neighbours and count true (black) pixels
 	  for (int i = 0; i<8; ++i) {
-		  if (neighbours[i] == true){
+		  if (neighbours[i]){
 			  numberBlackNeighbours += 1;
 		  }
 	  }
@@ -174,13 +174,13 @@ public class Fingerprint {
 	  int numberTransitions = 0;
 	  
 	  // Dealing with case of transition 7-0
-	  if (neighbours[7]==false && neighbours[0]==true) {
+	  if (neighbours[7] && neighbours[0]) {
 		  numberTransitions += 1;
 	  }
 	  
 	  //Dealing with all other transition cases 0-1 --> 6-7
 	  for (int i = 0; i<7; ++i) {
-		  if (neighbours[i]==false && neighbours[i+1]==true) {
+		  if (!neighbours[i] && neighbours[i + 1]) {
 			  numberTransitions+=1;
 		  }
 	  }
@@ -345,8 +345,8 @@ public class Fingerprint {
 
 
 	public static boolean[][] connectedPixels(boolean[][] image, int row, int col, int distance) {
-
-	  assert (image [row][col]==true);
+	  // It is assumed that the minutia pixel is black
+	  assert (image[row][col]);
 
 	  // Ending tab
 	  boolean[][] returningTab = new boolean[image.length][image[0].length];
@@ -388,7 +388,7 @@ public class Fingerprint {
 		  
 		  for (int i = 0; i <= 7; ++i) {
 
-			  if (neighbours[i] == true) {
+			  if (neighbours[i]) {
 
 				  //If one of the coordinates has already been registered before then we don't add this new coordinate. To not be stuck in an infinite loop.
 				  switch (i) {
@@ -500,8 +500,8 @@ public class Fingerprint {
   }
 	// The goal of this method is to chech if an arraylist of int [] contains a special int[]
   public static boolean contains(ArrayList<int[]> tab, int[] insidetab) {
-	  for (int i = 0; i < tab.size(); ++i) {
-		  if (Arrays.equals(tab.get(i), insidetab)) {
+	  for (int[] ints : tab) {
+		  if (Arrays.equals(ints, insidetab)) {
 			  return true;
 		  }
 
@@ -808,8 +808,8 @@ public class Fingerprint {
 	  List<int[]> transformedMinutiae = new ArrayList<>();
 
 
-	  for (int i = 0; i < minutiae.size(); ++i) {
-		  transformedMinutiae.add(applyTransformation(minutiae.get(i),centerRow,centerCol,rowTranslation,colTranslation,rotation));
+	  for (int[] minutia : minutiae) {
+		  transformedMinutiae.add(applyTransformation(minutia, centerRow, centerCol, rowTranslation, colTranslation, rotation));
 	  }
 
 	  return transformedMinutiae;
@@ -829,7 +829,7 @@ public class Fingerprint {
 	  
 	  int minutiaeCount = 0;
 	  
-	  ArrayList<int[][]> pairs = new ArrayList<int[][]>(); 
+	  //ArrayList<int[][]> pairs = new ArrayList<int[][]>();
 
 	  for (int i = 0; i < minutiae1.size(); ++i) {
 		  for (int j = 0; j < minutiae2.size(); ++j) {
