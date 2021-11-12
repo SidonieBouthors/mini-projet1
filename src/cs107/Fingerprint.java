@@ -718,6 +718,7 @@ public class Fingerprint {
 	  //initialise number of matching minutiae
 	  int minutiaeCount = 0;
 	  
+	  //Test Code
 	  //ArrayList<int[][]> pairs = new ArrayList<int[][]>();
 
 	  //iterate over all minutia from minutiae1 and minutiae2
@@ -730,7 +731,7 @@ public class Fingerprint {
 	
 			  if (distanceEuclidienne <= maxDistance && diffOrientation <= maxOrientation) {
 				  
-				  //temp
+				  //Test Code
 				  //pairs.add(new int[][] {minutiae1.get(i), minutiae2.get(j)});
 				  
 				  //increment count when matching minutiae are found
@@ -744,7 +745,7 @@ public class Fingerprint {
 		  }
 	
 	  }
-	/*
+	/* Test Code
 	if (maxMatchingMinutiae < minutiaeCount) {
 	System.out.println("\n\n********Test******* ("+minutiaeCount+")");
 	for (int[][] pair:pairs) {
@@ -762,11 +763,11 @@ public class Fingerprint {
 	return minutiaeCount;
   }
   
-  //temp
+  //Test Code
   //public static int maxMatchingMinutiae = 19;
 
   /**
-   * Compares the minutiae from two fingerprints.
+   * Compares the minutiae from two fingerprint.
    *
    * @param minutiae1 the list of minutiae of the first fingerprint.
    * @param minutiae2 the list of minutiae of the second fingerprint.
@@ -775,8 +776,8 @@ public class Fingerprint {
    */
   public static boolean match(List<int[]> minutiae1, List<int[]> minutiae2) {
 	  
-	  //temp
-	  int maxMatchings =0;
+	  //Test Code
+	  //int maxMatchings =0;
 
 	  //iterate over all minutia from minutiae1 and minutiae2
 	  for (int [] m1 : minutiae1) {
@@ -797,9 +798,10 @@ public class Fingerprint {
 				  if (matchingMinutiaeCount >= FOUND_THRESHOLD) {
 
 					  /*Test Code to print data about the Matching
-					  System.out.println("\nk = " + k);
-					  System.out.println("Matching: " + matchingMinutiaeCount + "  ");
-					  System.out.println(m1[0] + "  " + m1[1]+ "  " +rowTranslation+ "  " +colTranslation);
+					  System.out.println("\nMatching: " + matchingMinutiaeCount);
+					  System.out.println("Rotation = " + k);
+					  System.out.println("Minutia: [" + m1[0] + ", " + m1[1]+ ", " + m1[2]+ "]");
+					  System.out.println("Translation: " + rowTranslation + ", " + colTranslation);
 					  */
 					  
 					  return true;
@@ -812,6 +814,7 @@ public class Fingerprint {
 			  }
 		  }
 	  }
+	  
 	  /*Test Code to print data about the Matching (when fingerprint are not the same)
 	  System.out.println("\nMatching: " + maxMatchings + "  ");
 	  */
