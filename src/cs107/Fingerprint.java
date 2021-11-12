@@ -811,34 +811,34 @@ public class Fingerprint {
 	  //temp
 	  int maxMatchings =0;
 
-	  for (int i = 0; i < minutiae1.size(); i++) {
-		  for (int j = 0; j < minutiae2.size(); j++) {
+	  for (int [] m1 : minutiae1) {
+		  for (int [] m2 : minutiae2) {
 
-			  
-			  int rowTranslation = minutiae2.get(j)[0] - minutiae1.get(i)[0];
-			  int colTranslation = minutiae2.get(j)[1] - minutiae1.get(i)[1];
-			  int rotation = minutiae2.get(j)[2] - minutiae1.get(i)[2];
-			  
+
+			  int rowTranslation = m2[0] - m1[0];
+			  int colTranslation = m2[1] - m1[1];
+			  int rotation = m2[2] - m1[2];
+
 			  //temp
 			  //System.out.println("\nrotation = " + rotation);
-			  
+
 			  for (int k = rotation - MATCH_ANGLE_OFFSET; k <= rotation + MATCH_ANGLE_OFFSET ; ++k) {
 
-				  List<int[]> newMinutiae2 = applyTransformation(minutiae2,minutiae1.get(i)[0],minutiae1.get(i)[1],rowTranslation,colTranslation, k);
-				  
+				  List<int[]> newMinutiae2 = applyTransformation(minutiae2,m1[0],m1[1],rowTranslation,colTranslation, k);
+
 				  int matchingMinutiaeCount = matchingMinutiaeCount(minutiae1, newMinutiae2, DISTANCE_THRESHOLD, ORIENTATION_THRESHOLD);
-				  
-				  
+
+
 				  if (matchingMinutiaeCount >= FOUND_THRESHOLD) {
-					  
+
 					  //temp
 					  System.out.println("\nk = " + k);
 					  System.out.println("Matching: " + matchingMinutiaeCount + "  ");
-					  System.out.println(minutiae1.get(i)[0] + "  " + minutiae1.get(i)[1]+ "  " +rowTranslation+ "  " +colTranslation);
-					  
+					  System.out.println(m1[0] + "  " + m1[1]+ "  " +rowTranslation+ "  " +colTranslation);
+
 					  return true;
 				  }
-				  
+
 				  //temp
 				  if (matchingMinutiaeCount > maxMatchings) {
 					  maxMatchings = matchingMinutiaeCount;

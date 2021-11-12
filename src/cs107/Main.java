@@ -42,7 +42,7 @@ public class Main {
 	 testCompareAllTo("1_1");
 	 //testCompareAllTo("1_2");
 	 //testCompareAllTo("1_5");
-	 testCompareFingerprints("1_1", "1_2", true);
+	 //testCompareFingerprints("1_1", "1_2", true);
 	 //testCompareFingerprints("1_1", "1_6", true);
 	 //testDrawMinutiae("1_1"); //draw minutiae of fingerprint 1_1.png
      //testDrawMinutiae("1_6"); //draw minutiae of fingerprint 1_2.png
