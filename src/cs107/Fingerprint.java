@@ -369,18 +369,6 @@ public class Fingerprint {
 		  //x and y will only be the coordinates of every connected pixels
 		  x = coordNeighbours.get(j)[0];
 		  y = coordNeighbours.get(j)[1];
-		  
-		  //Check if current pixel is within distance of minutia
-		  
-		  /*
-		  if ((x >= row + distance || y >= col + distance || y <= col - distance)|| x <= row - distance) {
-			  
-			  //temp
-			  System.out.println("Out of bounds : x = " + x + " and y = " + y);
-			  
-			  ++j;
-			  continue;
-		  }*/
 
 		  //get the neighbours of current pixels
 		  boolean[] neighbours = getNeighbours(image, x, y);
@@ -417,72 +405,6 @@ public class Fingerprint {
 					//temp
 					  //System.out.println("\n Neighbour " + i + " of pixel " + j);
 				  }
-				  
-				  /*
-				  if (i == 0 && !contains(coordNeighbours, new int[]{x - 1, y})) {
-
-					  coordNeighbours.add(new int[]{x - 1, y});
-					  returningTab[x - 1][y] = true;
-					  
-					  //temp
-					  System.out.println("\n Neighbour " + i + " of pixel " + j);
-
-				  } else if (i == 1 && !contains(coordNeighbours, new int[]{x - 1, y + 1})) {
-
-					  coordNeighbours.add(new int[]{x - 1, y + 1});
-					  returningTab[x - 1][y + 1] = true;
-					  
-					//temp
-					  System.out.println("\n Neighbour " + i + " of pixel " + j);
-
-				  } else if ((i == 2) && ((j - 1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x, y + 1})))) {
-					  
-					  coordNeighbours.add(new int[]{x, y + 1});
-					  returningTab[x][y + 1] = true;
-					  
-					//temp
-					  System.out.println("\n Neighbour " + i + " of pixel " + j);
-					  
-				  } else if ((i==3) && ((j-1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours,new int[]{x + 1, y + 1})))) {
-					  
-					  coordNeighbours.add(new int[]{x + 1, y + 1});
-					  returningTab[x + 1][y + 1] = true;
-					  
-					//temp
-					  System.out.println("\n Neighbour " + i + " of pixel " + j);
-					  
-				  } else if ((i==4) && ((j-1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x + 1, y})))) {
-					  
-					  coordNeighbours.add(new int[]{x + 1, y});
-					  returningTab[x + 1][y] = true;
-					  
-					//temp
-					  System.out.println("\n Neighbour " + i + " of pixel " + j);
-					  
-				  } else if ((i==5) && ((j-1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x + 1, y - 1})))) {
-					  
-					  coordNeighbours.add(new int[]{x + 1, y - 1});
-					  returningTab[x + 1][y - 1] = true;
-					  
-					//temp
-					  System.out.println("\n Neighbour " + i + " of pixel " + j);
-					  
-				  } else if ((i==6) && ((j-1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x, y - 1})))) {
-					  
-					  coordNeighbours.add(new int[]{x, y - 1});
-					  returningTab[x][y - 1] = true;
-					  
-					//temp
-					  System.out.println("\n Neighbour " + i + " of pixel " + j);
-					  
-				  } else if ((i == 7) && ((j - 1 < 0) || (j - 1 >= 0 && !contains(coordNeighbours, new int[]{x - 1, y - 1})))) {
-					  
-					  coordNeighbours.add(new int[]{x - 1, y - 1});
-					  returningTab[x - 1][y - 1] = true;
-					  
-					//temp
-					  System.out.println("\n Neighbour " + i + " of pixel " + j);
-				  } */
 			  }
 		  }
 		  ++j;
@@ -833,13 +755,6 @@ public class Fingerprint {
 
 	  for (int[] m1 : minutiae1) {
 		  for (int[] m2 : minutiae2) {
-			  
-			  int row1 = m1[0];
-			  int col1 = m1[1];
-			  int orientation1 = m1[2];
-			  int row2 = m2[0];
-			  int col2 = m2[1];
-			  int orientation2 = m2[2];
 			  
 			  double distanceEuclidienne = Math.sqrt(Math.pow(m1[0] - m2[0] , 2) + Math.pow(m1[1] - m2[1], 2));
 	
