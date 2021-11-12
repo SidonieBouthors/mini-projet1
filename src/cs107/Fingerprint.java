@@ -469,7 +469,6 @@ public class Fingerprint {
    */
   public static double computeAngle(boolean[][] connectedPixels, int row, int col, double slope) {
 	  
-
 	  int pixelsAbove = 0;
 	  int pixelsBelow = 0;
 
