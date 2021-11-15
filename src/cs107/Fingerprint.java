@@ -397,7 +397,6 @@ public class Fingerprint {
 	  return connectedPixels;
   }
 	
-	
   /**
    * Checks if an ArrayList of int[] contains a certain int[] element
    * 
@@ -714,16 +713,7 @@ public class Fingerprint {
 			  //calculate Euclidian distance and difference in orientation
 			  double distanceEuclidienne = Math.sqrt(Math.pow(m1[0] - m2[0] , 2) + Math.pow(m1[1] - m2[1], 2));
 			  int diffOrientation = Math.abs(m1[2] - m2[2]);
-			  
-			  //TEST CODE
-			  /*
-			  if (m1[0] == 162 && m1[1] == 120 && m2[0] == 158 && m2[1]==121){
-				  System.out.println("############ FOUND ############");
-				  System.out.println("Rotations = " + m1[2] + "  " + m2[2]);
-				  System.out.println(distanceEuclidienne + " <=? " + maxDistance + "   " + diffOrientation + " <=? " + maxOrientation);
-			  }*/
 
-			  
 			  if (distanceEuclidienne <= maxDistance && diffOrientation <= maxOrientation) {
 				  
 				  //Test Code
@@ -737,6 +727,7 @@ public class Fingerprint {
 			  }
 		  }
 	  }
+	  
 	/* Test Code
 	if (maxMatchingMinutiae < minutiaeCount) {
 	System.out.println("\n\n********Test******* ("+minutiaeCount+ ")");
@@ -769,7 +760,7 @@ public class Fingerprint {
   public static boolean match(List<int[]> minutiae1, List<int[]> minutiae2) {
 	  
 	  //Test Code
-	  int maxMatchings =0;
+	  //int maxMatchings =0;
 
 	  //iterate over all minutia from minutiae1 and minutiae2
 	  for (int [] m1 : minutiae1) {
@@ -786,31 +777,30 @@ public class Fingerprint {
 				  List<int[]> newMinutiae2 = applyTransformation(minutiae2,m1[0],m1[1],rowTranslation,colTranslation, k);
 				  
 				  int matchingMinutiaeCount = matchingMinutiaeCount(minutiae1, newMinutiae2, DISTANCE_THRESHOLD, ORIENTATION_THRESHOLD);
-				  
-				  if (matchingMinutiaeCount >= 7) {
-				  /*Test Code to print data about the Matching*/
+				    
+				  if (matchingMinutiaeCount >= FOUND_THRESHOLD) {
+					  
+					  /*Test Code to print data about the Matching
 					  System.out.println("\nMatching: " + matchingMinutiaeCount);
 					  System.out.println("Rotation found = " + k + "  Original rotation = " + rotation);
 					  System.out.println("Minutia1: [" + m1[0] + ", " + m1[1]+ ", " + m1[2]+ "]");
 					  System.out.println("Minutia2: [" + m2[0] + ", " + m2[1]+ ", " + m2[2]+ "]");
 					  System.out.println("Translation: " + rowTranslation + ", " + colTranslation);
-				  }
-					  
-				  if (matchingMinutiaeCount >= FOUND_THRESHOLD) {
-					  
+					   */
 					  
 					  return true;
 				  }
 				  
-				  /*Test Code to count the max number of matching*/
+				  /*Test Code to count the max number of matching
 				  if (matchingMinutiaeCount > maxMatchings) {
 					  maxMatchings = matchingMinutiaeCount;
-				  }
+				  }*/
 			  }
 		  }
 	  }
-	  /*Test Code to print data about the Matching (when fingerprint are not the same)*/
+	  /*Test Code to print data about the Matching (when fingerprint are not the same)
 	  System.out.println("\nMatching: " + maxMatchings + "  ");
+	  */
 	  
 	  return false;
   }

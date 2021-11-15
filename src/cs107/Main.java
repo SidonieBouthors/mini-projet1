@@ -33,7 +33,7 @@ public class Main {
     //testWithSkeleton();
     //testWithSkeletonConnectedPixels();
     
-    //testDrawSkeleton("1_1"); //draw skeleton of fingerprint 1_1.png
+    //testDrawSkeleton("7_7"); //draw skeleton of fingerprint 1_1.png
     //testDrawSkeleton("1_2"); //draw skeleton of fingerprint 1_2.png
     //testDrawSkeleton("2_1"); //draw skeleton of fingerprint 2_1.png
 	
@@ -41,19 +41,17 @@ public class Main {
 	 //printMinutiae(Fingerprint.applyTransformation(Fingerprint.extract(Helper.readBinary("resources/test_outputs/skeleton_1_2.png")), 148, 83, 36, -6, 2));
 	 //System.out.println("\n\nMinutiae 1_1: ");
 	 //printMinutiae(Fingerprint.extract(Helper.readBinary("resources/test_outputs/skeleton_1_1.png")));
-	  //testCompareAllToFirst();
+	 
+	 //testCompareAllToFirst();
 	 //testCompareAllTo("1_1");
 	 //testCompareAllTo("1_2");
 	 //testCompareAllTo("1_5");
 	  
-	 testCompareFingerprints("1_2", "7_7", false);
+	 //testCompareFingerprints("1_2", "7_7", false);
 	 //testCompareFingerprints("1_1", "1_6", true);
 	  
 	 //testDrawMinutiae("1_1"); //draw minutiae of fingerprint 1_1.png
-     //testDrawMinutiae("1_6"); //draw minutiae of fingerprint 1_2.png
-	  
-	 //testConnectedPixel68();
-    
+     //testDrawMinutiae("1_2"); //draw minutiae of fingerprint 1_2.png
     
     /*
     testDrawMinutiae("2_1"); //draw minutiae of fingerprint 2_1.png
@@ -258,16 +256,6 @@ public class Main {
       printArray(connectedPixels);
     }
   }
-  
-  
-  //temp
-  public static void testConnectedPixel68() {
-	    System.out.print("testConnectedPixel68: ");
-	    boolean[][] image = Fingerprint.thin(Helper.readBinary("resources/fingerprints/1_1.png"));
-	    boolean[][] connectedPixels = Fingerprint.connectedPixels(image, 233, 37, Fingerprint.ORIENTATION_DISTANCE);
-	    Helper.writeBinary("test68.png", connectedPixels);
-	    
-	  }
 
   /**
    * This function is here to help you test the functionalities of
