@@ -469,11 +469,11 @@ public class Fingerprint {
 
 	  //****Particular case of vertical line (slope == Infinity)**** 
 	  if (slope == Double.POSITIVE_INFINITY) {
-		  //counting pixels above and below minutia
+		  //counting pixels above and below minutia row
 		  for (int i = 0; i < connectedPixels.length; ++i) {
 			  for ( int j = 0 ; j < connectedPixels[i].length; ++j) {
 				 if (connectedPixels[i][j]) {
-					  if (i >= row) {
+					  if (i <= row) {
 						  pixelsAbove += 1; }
 					  else {
 						  pixelsBelow += 1; }
@@ -610,14 +610,14 @@ public class Fingerprint {
   public static int[] applyRotation(int[] minutia, int centerRow, int centerCol, int rotation) {
 	  
 	  //calculate new values (using temporary variables for clarity)
-	  double x = minutia[1] - centerCol;
-	  double y = centerRow - minutia[0];
+	  int x = minutia[1] - centerCol;
+	  int y = centerRow - minutia[0];
 	  double radianRotation= Math.toRadians(rotation);
-	  double newX = x * Math.cos(radianRotation) - y * Math.sin(radianRotation);
-	  double newY = x * Math.sin(radianRotation) + y * Math.cos(radianRotation);
+	  double newX = (x * Math.cos(radianRotation)) - (y * Math.sin(radianRotation));
+	  double newY = (x * Math.sin(radianRotation)) + (y * Math.cos(radianRotation));
 	  int newRow= (int) Math.round(centerRow - newY);
-	  int newCol= (int) Math.round( newX + centerCol);
-	  int newOrientation = minutia[2] + rotation;  //we do not use the modulo (see README)
+	  int newCol= (int) Math.round(newX + centerCol);
+	  int newOrientation = (minutia[2] + rotation) % 360;
 	  
 	  return new int[] {newRow, newCol, newOrientation};
   }
@@ -714,11 +714,20 @@ public class Fingerprint {
 			  //calculate Euclidian distance and difference in orientation
 			  double distanceEuclidienne = Math.sqrt(Math.pow(m1[0] - m2[0] , 2) + Math.pow(m1[1] - m2[1], 2));
 			  int diffOrientation = Math.abs(m1[2] - m2[2]);
-	
+			  
+			  //TEST CODE
+			  /*
+			  if (m1[0] == 162 && m1[1] == 120 && m2[0] == 158 && m2[1]==121){
+				  System.out.println("############ FOUND ############");
+				  System.out.println("Rotations = " + m1[2] + "  " + m2[2]);
+				  System.out.println(distanceEuclidienne + " <=? " + maxDistance + "   " + diffOrientation + " <=? " + maxOrientation);
+			  }*/
+
+			  
 			  if (distanceEuclidienne <= maxDistance && diffOrientation <= maxOrientation) {
 				  
 				  //Test Code
-				  //pairs.add(new int[][] {minutiae1.get(i), minutiae2.get(j)});
+				  //pairs.add(new int[][] {m1, m2});
 				  
 				  //increment count when matching minutiae are found
 				  ++minutiaeCount;
@@ -730,7 +739,7 @@ public class Fingerprint {
 	  }
 	/* Test Code
 	if (maxMatchingMinutiae < minutiaeCount) {
-	System.out.println("\n\n********Test******* ("+minutiaeCount+")");
+	System.out.println("\n\n********Test******* ("+minutiaeCount+ ")");
 	for (int[][] pair:pairs) {
 		System.out.print("\n\nPair: ");
 		for (int[] minutia:pair) {
@@ -777,14 +786,18 @@ public class Fingerprint {
 				  List<int[]> newMinutiae2 = applyTransformation(minutiae2,m1[0],m1[1],rowTranslation,colTranslation, k);
 				  
 				  int matchingMinutiaeCount = matchingMinutiaeCount(minutiae1, newMinutiae2, DISTANCE_THRESHOLD, ORIENTATION_THRESHOLD);
-
-				  if (matchingMinutiaeCount >= FOUND_THRESHOLD) {
-
-					  /*Test Code to print data about the Matching*/
+				  
+				  if (matchingMinutiaeCount >= 7) {
+				  /*Test Code to print data about the Matching*/
 					  System.out.println("\nMatching: " + matchingMinutiaeCount);
-					  System.out.println("Rotation = " + k);
-					  System.out.println("Minutia: [" + m1[0] + ", " + m1[1]+ ", " + m1[2]+ "]");
+					  System.out.println("Rotation found = " + k + "  Original rotation = " + rotation);
+					  System.out.println("Minutia1: [" + m1[0] + ", " + m1[1]+ ", " + m1[2]+ "]");
+					  System.out.println("Minutia2: [" + m2[0] + ", " + m2[1]+ ", " + m2[2]+ "]");
 					  System.out.println("Translation: " + rowTranslation + ", " + colTranslation);
+				  }
+					  
+				  if (matchingMinutiaeCount >= FOUND_THRESHOLD) {
+					  
 					  
 					  return true;
 				  }

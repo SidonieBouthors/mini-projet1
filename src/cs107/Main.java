@@ -37,14 +37,16 @@ public class Main {
     //testDrawSkeleton("1_2"); //draw skeleton of fingerprint 1_2.png
     //testDrawSkeleton("2_1"); //draw skeleton of fingerprint 2_1.png
 	
-	 //printMinutiae(Fingerprint.applyTransformation(Fingerprint.extract(Helper.readBinary("resources/test_outputs/skeleton_1_1.png")), 4, 3, 0, 0, -1));
-	 
+	 //System.out.println("Minutiae 1_2 transformed: ");
+	 //printMinutiae(Fingerprint.applyTransformation(Fingerprint.extract(Helper.readBinary("resources/test_outputs/skeleton_1_2.png")), 148, 83, 36, -6, 2));
+	 //System.out.println("\n\nMinutiae 1_1: ");
+	 //printMinutiae(Fingerprint.extract(Helper.readBinary("resources/test_outputs/skeleton_1_1.png")));
 	  //testCompareAllToFirst();
-	 testCompareAllTo("1_1");
-	 testCompareAllTo("1_2");
-	 testCompareAllTo("1_5");
+	 //testCompareAllTo("1_1");
+	 //testCompareAllTo("1_2");
+	 //testCompareAllTo("1_5");
 	  
-	 //testCompareFingerprints("1_1", "1_2", true);
+	 testCompareFingerprints("1_2", "7_7", false);
 	 //testCompareFingerprints("1_1", "1_6", true);
 	  
 	 //testDrawMinutiae("1_1"); //draw minutiae of fingerprint 1_1.png
