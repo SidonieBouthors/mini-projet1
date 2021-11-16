@@ -33,7 +33,7 @@ public class Main {
     //testWithSkeleton();
     //testWithSkeletonConnectedPixels();
     
-    //testDrawSkeleton("7_7"); //draw skeleton of fingerprint 1_1.png
+    //testDrawSkeleton("1_1"); //draw skeleton of fingerprint 1_1.png
     //testDrawSkeleton("1_2"); //draw skeleton of fingerprint 1_2.png
     //testDrawSkeleton("2_1"); //draw skeleton of fingerprint 2_1.png
 	
@@ -47,15 +47,12 @@ public class Main {
 	 //testCompareAllTo("1_2");
 	 //testCompareAllTo("1_5");
 	  
-	 //testCompareFingerprints("1_2", "7_7", false);
-	 //testCompareFingerprints("1_1", "1_6", true);
+	 //testCompareFingerprints("1_1", "7_7", false);
+	 //testCompareFingerprints("1_5", "6_7", false);
 	  
 	 //testDrawMinutiae("1_1"); //draw minutiae of fingerprint 1_1.png
      //testDrawMinutiae("1_2"); //draw minutiae of fingerprint 1_2.png
-    
-    /*
-    testDrawMinutiae("2_1"); //draw minutiae of fingerprint 2_1.png
-	*/
+
     //---------------------------
     // Test overall functionality
     //---------------------------

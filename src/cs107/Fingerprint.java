@@ -466,13 +466,13 @@ public class Fingerprint {
 	  int pixelsAbove = 0;
 	  int pixelsBelow = 0;
 
-	  //****Particular case of vertical line (slope == Infinity)**** 
+	  //****Particular case of vertical minutia (slope == Infinity)**** 
 	  if (slope == Double.POSITIVE_INFINITY) {
 		  //counting pixels above and below minutia row
 		  for (int i = 0; i < connectedPixels.length; ++i) {
 			  for ( int j = 0 ; j < connectedPixels[i].length; ++j) {
 				 if (connectedPixels[i][j]) {
-					  if (i <= row) {
+					  if (i < row) {
 						  pixelsAbove += 1; }
 					  else {
 						  pixelsBelow += 1; }
@@ -489,7 +489,7 @@ public class Fingerprint {
 	  //initialise angle (used in *General Case* and *Particular case slope == 0*
 	  double angle = Math.atan(slope);
 	  
-	  //****Particular case of horizontal line (slope == 0)****
+	  //****Particular case of horizontal minutia (slope == 0)****
 	  if (Double.compare(slope, 0.0) == 0) {
 		  for (int i = 0; i < connectedPixels.length; ++i) {
 			  for ( int j = 0 ; j < connectedPixels[i].length; ++j) {
@@ -780,13 +780,13 @@ public class Fingerprint {
 				    
 				  if (matchingMinutiaeCount >= FOUND_THRESHOLD) {
 					  
-					  /*Test Code to print data about the Matching
+					  /*Test Code to print data about the Matching 
 					  System.out.println("\nMatching: " + matchingMinutiaeCount);
 					  System.out.println("Rotation found = " + k + "  Original rotation = " + rotation);
 					  System.out.println("Minutia1: [" + m1[0] + ", " + m1[1]+ ", " + m1[2]+ "]");
 					  System.out.println("Minutia2: [" + m2[0] + ", " + m2[1]+ ", " + m2[2]+ "]");
 					  System.out.println("Translation: " + rowTranslation + ", " + colTranslation);
-					   */
+					  */
 					  
 					  return true;
 				  }
